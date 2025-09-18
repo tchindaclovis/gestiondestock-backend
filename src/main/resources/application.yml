@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gestionstock?createDatabaseIfNotExist=true&userSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#    url: jdbc:postgresql://localhost:5432/gestionstock
+    username: postgres
+    password: JESUSglory
+    driver-class-name: org.postgresql.Driver
+## Specify DBMS
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+
+# Hibernate DDL Auto (create, create-drop, update)
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8081
+
+minio:
+  url: http://127.0.0.1:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: mybucket
+
+
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: /docs/test-api
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui.html
+#    tags-sorter: alpha
+#    operations-sorter: alpha
+#    display-request-duration: true
+#  packages-to-scan: com.tchindaClovis.gestiondestock.controller
+#  paths-to-match: /v1/**
+##  paths-to-match: /api/**
