@@ -8,4 +8,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
 
     Optional<Utilisateur> findUtilisateurByNomUtilisateur(String nomUtilisateur);
     Optional<Utilisateur> findUtilisateurByPrenomUtilisateur(String prenomUtilisateur);
+    Optional<Utilisateur> findByEmail(String email); // elle va chercher un utilisateur par son email dans la BDD
 }

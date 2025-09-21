@@ -23,7 +23,7 @@ public class MvtStock extends AbstractEntity {
     @Column(name = "typemvtstock")
     private TypeMvtStock typeMvtStock;
 
-    @Column(name = "identreprise")  //entité de convenance qu'on ajoute juste pour certaines dispositions
+    @Column(name = "idEntreprise")  //entité de convenance qu'on ajoute juste pour certaines dispositions
     private Integer idEntreprise;  //rien à voir avec les règle UML
 
     @ManyToOne

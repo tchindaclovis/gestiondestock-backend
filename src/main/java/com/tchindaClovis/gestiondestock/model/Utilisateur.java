@@ -38,7 +38,7 @@ public class Utilisateur extends AbstractEntity{
     private List<Roles> roles;
 
     @ManyToOne
-    @JoinColumn(name = "identreprise")
+    @JoinColumn(name = "idEntreprise")
     private Entreprise entreprise;
 
 }

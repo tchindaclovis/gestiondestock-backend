@@ -29,25 +29,21 @@ public class ArticleController implements ArticleApi {
 
     @Override
     public ArticleDto findById(Integer id) {
-
         return articleService.findById(id);
     }
 
     @Override
     public ArticleDto findByCodeArticle(String codeArticle) {
-
         return articleService.findByCodeArticle(codeArticle);
     }
 
     @Override
     public List<ArticleDto> findAll() {
-
         return articleService.findAll();
     }
 
     @Override
     public void delete(Integer id) {
-
         articleService.delete(id);
     }
 }

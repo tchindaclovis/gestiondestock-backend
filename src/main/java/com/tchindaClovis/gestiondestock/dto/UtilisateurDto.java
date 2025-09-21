@@ -26,7 +26,6 @@ public class UtilisateurDto {
 
     private EntrepriseDto entreprise;
 
-    @JsonIgnore
     private List<RolesDto> roles;
 
     public static UtilisateurDto fromEntity (Utilisateur utilisateur){  //permet de faire un mapping de l'entité vers le DTO

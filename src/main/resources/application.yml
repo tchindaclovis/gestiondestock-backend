@@ -5,17 +5,25 @@ spring:
     username: postgres
     password: JESUSglory
     driver-class-name: org.postgresql.Driver
-## Specify DBMS
+
+    ## Specify DBMS
   jpa:
     database: POSTGRESQL
     show-sql: false
-
-# Hibernate DDL Auto (create, create-drop, update)
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
+        format_sql: true
+        ejb:
+          interceptor: com.tchindaClovis.gestiondestock.interceptor.Interceptor
+        session_factory:
+          statement_inspector: com.tchindaClovis.gestiondestock.interceptor.Interceptor
+
+
+    # Hibernate DDL Auto (create, create-drop, update)
+    hibernate:
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
+
 
 server:
   port: 8081

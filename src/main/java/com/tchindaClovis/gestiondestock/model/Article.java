@@ -31,12 +31,14 @@ public class Article extends AbstractEntity{
     @Column(name = "photo")
     private String photo;  //String parceque ça ne sera pas stocké dans la BDD mais dans le cloud
 
+
+
     @ManyToOne
     @JoinColumn(name = "idcategory")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "identreprise")
+    @JoinColumn(name = "idEntreprise")
     private Entreprise entreprise;
 
     @OneToMany(mappedBy = "article")

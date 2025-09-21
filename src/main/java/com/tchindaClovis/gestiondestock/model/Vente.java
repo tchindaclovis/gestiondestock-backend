@@ -27,7 +27,7 @@ public class Vente extends AbstractEntity{
     @Column(name = "commentaire")
     private String commentaire;
 
-    @Column(name = "identreprise")  //entité de convenance qu'on ajoute juste pour certaines dispositions
+    @Column(name = "idEntreprise")  //entité de convenance qu'on ajoute juste pour certaines dispositions
     private Integer idEntreprise;  //rien à voir avec les règle UML
 
     @OneToMany(mappedBy = "vente")
