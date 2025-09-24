@@ -2,43 +2,191 @@ package com.tchindaClovis.gestiondestock.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.Components;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
 
 @Configuration
 public class SwaggerConfiguration {
 
-    /**
-     * Configuration des informations générales de l'API
-     */
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
     @Bean
-    @Primary
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Gestion de stock REST API")
                         .description("Gestion de stock API documentation")
-                        .version("v1"));
+                        .version("v1"))
+                .addSecurityItem(new SecurityRequirement().addList("JWT"))
+                .components(new Components()
+                        .addSecuritySchemes("JWT",
+                                new SecurityScheme()
+                                        .name(AUTHORIZATION_HEADER)
+                                        .type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.HEADER)
+                                        .description("JWT token")
+                        ));
     }
 
-    /**
-     * Définition d’un groupe d’API (équivalent de Docket dans Springfox)
-     */
     @Bean
-    public GroupedOpenApi gestionStockApi() {
+    public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("REST API V1")
-                .packagesToScan("com.tchindaClovis.gestiondestock.controller")
+                .packagesToScan("com.tchindaClovis.gestiondestock")
                 .pathsToMatch("/**")
                 .build();
     }
-
 }
 
 
+
+
+
+//package com.tchindaClovis.gestiondestock.config;
+//
+//import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+//import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+//import io.swagger.v3.oas.annotations.info.Info;
+//import io.swagger.v3.oas.annotations.security.SecurityScheme;
+//import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+//import io.swagger.v3.oas.models.Components;
+//import io.swagger.v3.oas.models.OpenAPI;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//
+//@Configuration
+//@OpenAPIDefinition(
+//        info = @Info(
+//                title = "Gestion de stock REST API",
+//                description = "Gestion de stock API documentation",
+//                version = "v1"
+//        ),
+//        security = @SecurityRequirement(name = "bearerAuth")
+//)
+//@SecurityScheme(
+//        name = "bearerAuth",
+//        type = SecuritySchemeType.HTTP,
+//        scheme = "bearer",
+//        bearerFormat = "JWT"
+//)
+//public class SwaggerConfiguration {
+//
+//    public static final String AUTHORIZATION_HEADER = "Authorization";
+//
+//    @Bean
+//    public OpenAPI customOpenAPI() {
+//        return new OpenAPI()
+//                .info(new io.swagger.v3.oas.models.info.Info()
+//                        .title("Gestion de stock REST API")
+//                        .description("Gestion de stock API documentation")
+//                        .version("v1"))
+//                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+//                .components(new Components()
+//                        .addSecuritySchemes("bearerAuth", new io.swagger.v3.oas.models.security.SecurityScheme()
+//                                .name(AUTHORIZATION_HEADER)
+//                                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+//                                .scheme("bearer")
+//                                .bearerFormat("JWT")
+//                                .in(io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER)
+//                        ));
+//    }
+//}
+
+
+
+//package com.tchindaClovis.gestiondestock.config;
+//
+//        import io.swagger.v3.oas.models.OpenAPI;
+//        import io.swagger.v3.oas.models.info.Info;
+//        import io.swagger.v3.oas.models.security.SecurityScheme;
+//        import io.swagger.v3.oas.models.security.SecurityRequirement;
+//        import io.swagger.v3.oas.models.Components;
+//        import org.springframework.context.annotation.Bean;
+//        import org.springframework.context.annotation.Configuration;
+//        import org.springframework.context.annotation.Primary;
+//
+//@Configuration
+//public class SwaggerConfiguration {
+//
+//    @Bean
+//    @Primary
+//    public OpenAPI customOpenAPI() {
+//        return new OpenAPI()
+//                .info(new Info()
+//                        .title("Gestion de stock REST API")
+//                        .description("Gestion de stock API documentation")
+//                        .version("v1"))
+//                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+//                .components(new Components()
+//                        .addSecuritySchemes("bearerAuth",
+//                                new SecurityScheme()
+//                                        .name("Authorization")
+//                                        .type(SecurityScheme.Type.HTTP)
+//                                        .scheme("bearer")
+//                                        .bearerFormat("JWT")
+//                                        .in(SecurityScheme.In.HEADER)
+//                        ));
+//    }
+//}
+
+
+
+
+//package com.tchindaClovis.gestiondestock.config;
+//
+//import io.swagger.v3.oas.models.OpenAPI;
+//import io.swagger.v3.oas.models.info.Info;
+//import org.springdoc.core.models.GroupedOpenApi;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.Primary;
+//import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
+//
+//@Configuration
+//public class SwaggerConfiguration {
+//
+//    /**
+//     * Configuration des informations générales de l'API
+//     */
+//    @Bean
+//    @Primary
+//    public OpenAPI customOpenAPI() {
+//        return new OpenAPI()
+//                .info(new Info()
+//                        .title("Gestion de stock REST API")
+//                        .description("Gestion de stock API documentation")
+//                        .version("v1"));
+//    }
+//
+//    /**
+//     * Définition d’un groupe d’API (équivalent de Docket dans Springfox)
+//     */
+//    @Bean
+//    public GroupedOpenApi gestionStockApi() {
+//        return GroupedOpenApi.builder()
+//                .group("REST API V1")
+//                .packagesToScan("com.tchindaClovis.gestiondestock.controller")
+//                .pathsToMatch("/**")
+//                .build();
+//    }
+//}
+
+
+
+
+
+//                 🔄 Correspondance des éléments :
+//        SpringFox (Swagger 2)	        SpringDoc (OpenAPI 3)
+//        @EnableSwagger2	            @OpenAPIDefinition ou configuration via OpenAPI bean
+//        Docket	                    OpenAPI
+//        ApiInfoBuilder	            Info dans OpenAPI
+//        ApiKey	                    SecurityScheme avec type HTTP et scheme bearer
+//        SecurityContext	            SecurityRequirement
+//        SecurityReference	        Implémenté automatiquement
 
 
 

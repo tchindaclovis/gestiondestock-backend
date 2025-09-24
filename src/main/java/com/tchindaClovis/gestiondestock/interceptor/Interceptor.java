@@ -1,41 +1,82 @@
 package com.tchindaClovis.gestiondestock.interceptor;
 
 import org.hibernate.resource.jdbc.spi.StatementInspector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 
-@Component
 public class Interceptor implements StatementInspector {
-
-    private static final Logger logger = LoggerFactory.getLogger(Interceptor.class);
 
     @Override
     public String inspect(String sql) {
-        // Formater le SQL pour une meilleure lisibilité
-        String formattedSql = sql.replaceAll("\\s+", " ").trim();
+        if (StringUtils.hasLength(sql) && sql.toLowerCase().startsWith("select")) {
+            // select utilisateu0_.
+            final String entityName = sql.substring(7, sql.indexOf("."));
+            final String idEntreprise = MDC.get("idEntreprise"); //récupérer l'idEntreprise de mon MDC
+            if (StringUtils.hasLength(entityName)
+                    && !entityName.toLowerCase().contains("entreprise") //la classe "Entreprise" ne contient pas l'identreprise
+                    && !entityName.toLowerCase().contains("roles") //la classe "Roles" ne contient pas l'idEntreprise
+                    && StringUtils.hasLength(idEntreprise)) {   // vérifier que l'idEntreprise n'est pas null
 
-        logger.info("""
-            🐢 SQL Intercepté (Hibernate 6):
-            ┌────────────────────────────────────────────────────
-            │ {}
-            └────────────────────────────────────────────────────
-            """, formattedSql);
-
-        // Vous pouvez modifier le SQL ici si nécessaire
-        if(StringUtils.hasLength(sql) && sql.toLowerCase().startsWith("select")){
-            if(sql.contains("where")){
-                sql = sql + " and idEntreprise = 3";
-            } else {
-            sql = sql + " where idEntreprise = 3";
+                if (sql.contains("where")) {
+                    sql = sql + " and " + entityName + ".identreprise = " + idEntreprise;
+                } else {
+                    sql = sql + " where " + entityName + ".identreprise = " + idEntreprise;
+                }
             }
         }
-
-        // return formattedSql + " /* intercepté */";
-        return sql; // Retourner le SQL original ou modifié
+        return sql;
     }
 }
+
+
+
+
+
+
+
+
+
+//package com.tchindaClovis.gestiondestock.interceptor;
+//
+//import org.hibernate.resource.jdbc.spi.StatementInspector;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.stereotype.Component;
+//import org.springframework.util.StringUtils;
+//
+//@Component
+//public class Interceptor implements StatementInspector {
+//
+//    private static final Logger logger = LoggerFactory.getLogger(Interceptor.class);
+//
+//    @Override
+//    public String inspect(String sql) {
+//        // Formater le SQL pour une meilleure lisibilité
+//        String formattedSql = sql.replaceAll("\\s+", " ").trim();
+//
+//        logger.info("""
+//            🐢 SQL Intercepté (Hibernate 6):
+//            ┌────────────────────────────────────────────────────
+//            │ {}
+//            └────────────────────────────────────────────────────
+//            """, formattedSql);
+//
+//        // Vous pouvez modifier le SQL ici si nécessaire
+//        if(StringUtils.hasLength(sql) && sql.toLowerCase().startsWith("select")){
+//            if(sql.contains("where")){
+//                sql = sql + " and identreprise = 3";
+//            } else {
+//            sql = sql + " where identreprise = 3";
+//            }
+//        }
+//
+//        // return formattedSql + " /* intercepté */";
+//        return sql; // Retourner le SQL original ou modifié
+//    }
+//}
+
+
+
 
 
 //package com.tchindaClovis.gestiondestock.interceptor;

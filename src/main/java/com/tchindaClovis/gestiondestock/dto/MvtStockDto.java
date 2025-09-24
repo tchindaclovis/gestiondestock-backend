@@ -1,6 +1,7 @@
 package com.tchindaClovis.gestiondestock.dto;
+import com.tchindaClovis.gestiondestock.model.ESourceMvtStock;
+import com.tchindaClovis.gestiondestock.model.ETypeMvtStock;
 import com.tchindaClovis.gestiondestock.model.MvtStock;
-import com.tchindaClovis.gestiondestock.model.TypeMvtStock;
 import lombok.Builder;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -16,9 +17,13 @@ public class MvtStockDto {
 
     private BigDecimal quantite;
 
+    private Integer idEntreprise;
+
     private ArticleDto article;
 
-    private TypeMvtStock typeMvtStock;
+    private ETypeMvtStock typeMvt;
+
+    private ESourceMvtStock sourceMvt;
 
     public static MvtStockDto fromEntity (MvtStock mvtStock){
         if(mvtStock == null){
@@ -28,6 +33,9 @@ public class MvtStockDto {
                 .id(mvtStock.getId())
                 .dateMvt(mvtStock.getDateMvt())
                 .quantite(mvtStock.getQuantite())
+                .idEntreprise(mvtStock.getIdEntreprise())
+                .typeMvt(mvtStock.getTypeMvt())
+                .sourceMvt(mvtStock.getSourceMvt())
                 .article(ArticleDto.fromEntity(mvtStock.getArticle()))
                 .build();
     }
@@ -40,6 +48,9 @@ public class MvtStockDto {
         mvtStock.setId(mvtStockDto.getId());
         mvtStock.setDateMvt(mvtStockDto.getDateMvt());
         mvtStock.setQuantite(mvtStockDto.getQuantite());
+        mvtStock.setTypeMvt(mvtStockDto.getTypeMvt());
+        mvtStock.setSourceMvt(mvtStockDto.getSourceMvt());
+        mvtStock.setIdEntreprise(mvtStockDto.getIdEntreprise());
         mvtStock.setArticle(ArticleDto.toEntity(mvtStockDto.getArticle()));
 
         return mvtStock;

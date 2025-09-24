@@ -1,5 +1,6 @@
 package com.tchindaClovis.gestiondestock.dto;
 import com.tchindaClovis.gestiondestock.model.Article;
+import com.tchindaClovis.gestiondestock.model.Entreprise;
 import lombok.Builder;
 import lombok.Data;
 
@@ -25,6 +26,8 @@ public class ArticleDto {
 
     private CategoryDto category;
 
+    private Integer idEntreprise;
+
     //permet de faire un mapping de CategoryDto vers Category
     public static ArticleDto fromEntity (Article article){
         if(article == null){
@@ -38,6 +41,7 @@ public class ArticleDto {
                 .tauxTva(article.getTauxTva())
                 .prixUnitaireTtc(article.getPrixUnitaireTtc())
                 .photo(article.getPhoto())
+                .idEntreprise(article.getIdEntreprise())
                 .category(CategoryDto.fromEntity(article.getCategory()))
 
                 .build();
@@ -55,6 +59,7 @@ public class ArticleDto {
         article.setTauxTva(articleDto.getTauxTva());
         article.setPrixUnitaireTtc(articleDto.getPrixUnitaireTtc());
         article.setPhoto(articleDto.getPhoto());
+        article.setIdEntreprise(articleDto.getIdEntreprise());
         article.setCategory(CategoryDto.toEntity(articleDto.getCategory()));
 
         return article;

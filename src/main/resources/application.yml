@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/gestionstock?createDatabaseIfNotExist=true&userSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-#    url: jdbc:postgresql://localhost:5432/gestionstock
+#   url: jdbc:postgresql://localhost:5432/gestionstock
     username: postgres
     password: JESUSglory
     driver-class-name: org.postgresql.Driver
@@ -18,7 +18,6 @@ spring:
         session_factory:
           statement_inspector: com.tchindaClovis.gestiondestock.interceptor.Interceptor
 
-
     # Hibernate DDL Auto (create, create-drop, update)
     hibernate:
       ddl-auto: update
@@ -33,6 +32,11 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   bucket: mybucket
+
+jwt:
+  secret: mySuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm
+  expiration: 36000000
+
 
 
 #springdoc:

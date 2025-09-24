@@ -31,15 +31,12 @@ public class Article extends AbstractEntity{
     @Column(name = "photo")
     private String photo;  //String parceque ça ne sera pas stocké dans la BDD mais dans le cloud
 
-
-
     @ManyToOne
     @JoinColumn(name = "idcategory")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "idEntreprise")
-    private Entreprise entreprise;
+    @Column(name = "identreprise")  //entité de convenance qu'on ajoute juste pour certaines dispositions
+    private Integer idEntreprise;  //rien à voir avec les règle UML
 
     @OneToMany(mappedBy = "article")
     private List<LigneCommandeClient> ligneCommandeClients;

@@ -4,6 +4,8 @@ import com.tchindaClovis.gestiondestock.model.*;
 import lombok.Builder;
 import lombok.Data;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @Builder
 public class UtilisateurDto {
@@ -43,6 +45,12 @@ public class UtilisateurDto {
                 .photo(utilisateur.getPhoto())
                 .adresse(AdresseDto.fromEntity(utilisateur.getAdresse()))
                 .entreprise(EntrepriseDto.fromEntity(utilisateur.getEntreprise()))
+                .roles(
+                        utilisateur.getRoles() != null ?
+                                utilisateur.getRoles().stream()
+                                        .map(RolesDto::fromEntity)
+                                        .collect(Collectors.toList()) : null
+                )
                 .build();
     }
 

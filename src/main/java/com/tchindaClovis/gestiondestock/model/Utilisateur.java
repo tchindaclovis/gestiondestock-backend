@@ -1,5 +1,6 @@
 package com.tchindaClovis.gestiondestock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,11 +35,12 @@ public class Utilisateur extends AbstractEntity{
     @Column(name = "photo")
     private String photo;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Roles> roles;
 
     @ManyToOne
-    @JoinColumn(name = "idEntreprise")
+    @JoinColumn(name = "identreprise")
     private Entreprise entreprise;
 
 }

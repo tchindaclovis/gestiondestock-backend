@@ -17,6 +17,8 @@ public class VenteDto {
 
     private String commentaire;
 
+    private Integer idEntreprise;
+
     @JsonIgnore
     private List<LigneVenteDto> LigneVentes;
 
@@ -30,6 +32,7 @@ public class VenteDto {
                 .code(vente.getCode())
                 .dateVente(vente.getDateVente())
                 .commentaire(vente.getCommentaire())
+                .idEntreprise(vente.getIdEntreprise())
                 .build();
     }
 
@@ -42,6 +45,7 @@ public class VenteDto {
         vente.setCode(venteDto.getCode());
         vente.setDateVente(venteDto.getDateVente());
         vente.setCommentaire(venteDto.getCommentaire());
+        vente.setIdEntreprise(venteDto.getIdEntreprise());
 
         return vente;
     }

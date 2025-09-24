@@ -19,6 +19,8 @@ public class FournisseurDto {
 
     private String numTel;
 
+    private Integer idEntreprise;
+
     private AdresseDto adresse;
 
     @JsonIgnore
@@ -35,21 +37,23 @@ public class FournisseurDto {
                 .photo(fournisseur.getPhoto())
                 .email(fournisseur.getEmail())
                 .numTel(fournisseur.getNumTel())
+                .idEntreprise(fournisseur.getIdEntreprise())
                 .adresse(AdresseDto.fromEntity(fournisseur.getAdresse()))
                 .build();
     }
 
-    public static Fournisseur toEntity (FournisseurDto fournisseurDto){    //permet de faire un mapping du DTO vers l'entité
-        if(fournisseurDto == null){
+    public static Fournisseur toEntity (FournisseurDto dto){    //permet de faire un mapping du DTO vers l'entité
+        if(dto == null){
             return null;
         }
         Fournisseur fournisseur = new Fournisseur();
-        fournisseur.setId(fournisseurDto.getId());
-        fournisseur.setNomFournisseur(fournisseurDto.getNomFournisseur());
-        fournisseur.setPhoto(fournisseurDto.getPhoto());
-        fournisseur.setEmail(fournisseurDto.getEmail());
-        fournisseur.setNumTel(fournisseurDto.getNumTel());
-        fournisseur.setAdresse(AdresseDto.toEntity(fournisseurDto.getAdresse()));
+        fournisseur.setId(dto.getId());
+        fournisseur.setNomFournisseur(dto.getNomFournisseur());
+        fournisseur.setPhoto(dto.getPhoto());
+        fournisseur.setEmail(dto.getEmail());
+        fournisseur.setNumTel(dto.getNumTel());
+        fournisseur.setIdEntreprise(dto.getIdEntreprise());
+        fournisseur.setAdresse(AdresseDto.toEntity(dto.getAdresse()));
 
         return fournisseur;
     }

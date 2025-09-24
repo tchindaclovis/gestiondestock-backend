@@ -1,5 +1,5 @@
 package com.tchindaClovis.gestiondestock.model;
 
-public enum TypeMvtStock {
+public enum ETypeMvtStock {
     ENTREE, SORTIE
 }

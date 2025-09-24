@@ -2,6 +2,7 @@ package com.tchindaClovis.gestiondestock.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tchindaClovis.gestiondestock.model.CommandeClient;
 import com.tchindaClovis.gestiondestock.model.CommandeFournisseur;
+import com.tchindaClovis.gestiondestock.model.EEtatCommande;
 import lombok.Builder;
 import lombok.Data;
 import java.time.Instant;
@@ -17,7 +18,11 @@ public class CommandeFournisseurDto {
 
     private Instant dateCommande;
 
+    private EEtatCommande etatCommande;
+
     private FournisseurDto fournisseur;
+
+    private Integer idEntreprise;
 
     private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
@@ -31,6 +36,8 @@ public class CommandeFournisseurDto {
                 .id(commandeFournisseur.getId())
                 .code(commandeFournisseur.getCode())
                 .dateCommande(commandeFournisseur.getDateCommande())
+                .etatCommande(commandeFournisseur.getEtatCommande())
+                .idEntreprise(commandeFournisseur.getIdEntreprise())
                 .fournisseur(FournisseurDto.fromEntity(commandeFournisseur.getFournisseur()))
                 .build();
     }
@@ -43,6 +50,8 @@ public class CommandeFournisseurDto {
         commandeFournisseur.setId(commandeFournisseurDto.getId());
         commandeFournisseur.setCode(commandeFournisseurDto.getCode());
         commandeFournisseur.setDateCommande(commandeFournisseurDto.getDateCommande());
+        commandeFournisseur.setIdEntreprise(commandeFournisseurDto.getIdEntreprise());
+        commandeFournisseur.setEtatCommande(commandeFournisseurDto.getEtatCommande());
         commandeFournisseur.setFournisseur(FournisseurDto.toEntity(commandeFournisseurDto.getFournisseur()));
 
         return commandeFournisseur;

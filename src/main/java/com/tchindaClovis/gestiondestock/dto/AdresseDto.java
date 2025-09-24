@@ -17,7 +17,7 @@ public class AdresseDto {
 
     private String pays;
 
-    //permet de faire un mapping de AdresseDto vers Adresse
+    //permet de faire un mapping de Adresse vers AdresseDto
     public static AdresseDto fromEntity (Adresse adresse){  //permet de faire un mapping de l'entité vers le DTO
         if(adresse == null){
             return null;
@@ -30,7 +30,7 @@ public class AdresseDto {
                 .pays(adresse.getPays())
                 .build();
     }
-    //permet de faire un mapping de Adresse vers AdresseDto
+    //permet de faire un mapping de AdresseDto vers Adresse
     public static Adresse toEntity (AdresseDto adresseDto){  //permet de faire un mapping du DTO vers l'entité
         if(adresseDto == null){
             return null;

@@ -28,6 +28,9 @@ public class EntrepriseDto {
 
     private AdresseDto adresse;
 
+//    @JsonIgnore
+//    private List<ArticleDto> articles;
+
     @JsonIgnore
     private List<UtilisateurDto> utilisateurs;
 

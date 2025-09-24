@@ -1,4 +1,5 @@
 package com.tchindaClovis.gestiondestock.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tchindaClovis.gestiondestock.model.Roles;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ public class RolesDto {
 
     private String roleName;
 
+    @JsonIgnore //pour limiter l'accès à l'info
     private UtilisateurDto utilisateur;
 
     public static RolesDto fromEntity (Roles roles){
@@ -21,7 +23,7 @@ public class RolesDto {
         return RolesDto.builder()
                 .id(roles.getId())
                 .roleName(roles.getRoleName())
-                .utilisateur(UtilisateurDto.fromEntity(roles.getUtilisateur()))
+//                .utilisateur(UtilisateurDto.fromEntity(roles.getUtilisateur()))
                 .build();
     }
 

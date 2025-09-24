@@ -1,5 +1,6 @@
 package com.tchindaClovis.gestiondestock.dto;
 import com.tchindaClovis.gestiondestock.model.CommandeClient;
+import com.tchindaClovis.gestiondestock.model.EEtatCommande;
 import lombok.Builder;
 import lombok.Data;
 import java.time.Instant;
@@ -14,6 +15,10 @@ public class  CommandeClientDto {
 
     private Instant dateCommande;
 
+    private Integer idEntreprise;
+
+    private EEtatCommande etatCommande;
+
     private ClientDto client;
 
     private List<LigneCommandeClientDto> ligneCommandeClients;
@@ -27,6 +32,8 @@ public class  CommandeClientDto {
                 .id(commandeClient.getId())
                 .code(commandeClient.getCode())
                 .dateCommande(commandeClient.getDateCommande())
+                .idEntreprise(commandeClient.getIdEntreprise())
+                .etatCommande(commandeClient.getEtatCommande())
                 .client(ClientDto.fromEntity(commandeClient.getClient()))
                 .build();
     }
@@ -39,6 +46,8 @@ public class  CommandeClientDto {
         commandeClient.setId(commandeClientDto.getId());
         commandeClient.setCode(commandeClientDto.getCode());
         commandeClient.setDateCommande(commandeClientDto.getDateCommande());
+        commandeClient.setEtatCommande(commandeClientDto.getEtatCommande());
+        commandeClient.setIdEntreprise(commandeClientDto.getIdEntreprise());
         commandeClient.setClient(ClientDto.toEntity(commandeClientDto.getClient()));
 
         return commandeClient;
