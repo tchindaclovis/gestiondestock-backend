@@ -1,28 +1,28 @@
 package com.tchindaClovis.gestiondestock.controller;
 
+import com.tchindaClovis.gestiondestock.controller.api.AuthenticationApi;
 import com.tchindaClovis.gestiondestock.dto.auth.AuthenticationRequest;
 import com.tchindaClovis.gestiondestock.dto.auth.AuthenticationResponse;
 import com.tchindaClovis.gestiondestock.services.auth.ApplicationUserDetailsService;
 import com.tchindaClovis.gestiondestock.utils.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
 
 @RestController
-@RequestMapping(AUTHENTICATION_ENDPOINT)
-public class AuthenticationController {
+//@RequestMapping(AUTHENTICATION_ENDPOINT)
+public class AuthenticationController implements AuthenticationApi {
 
-    private final AuthenticationManager authenticationManager;
-    private final ApplicationUserDetailsService userDetailsService;
-    private final JwtUtil jwtUtil;
+    private AuthenticationManager authenticationManager;
+    private ApplicationUserDetailsService userDetailsService;
+    private JwtUtil jwtUtil;
 
     // Injection par constructeur (recommandé)
+    @Autowired
     public AuthenticationController(
             AuthenticationManager authenticationManager,
             ApplicationUserDetailsService userDetailsService,
@@ -33,7 +33,7 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/authenticate")
+    @Override
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
 //        try {
 //            // Authentifier l'utilisateur pour voir s'il existe dans la BDD
@@ -54,17 +54,17 @@ public class AuthenticationController {
             return ResponseEntity.ok(AuthenticationResponse.builder().accessToken(jwtToken).build());
 
 //        } catch (BadCredentialsException e) {
-//            return ResponseEntity.status(401).body(
-//                    AuthenticationResponse.builder()
-//                            .error("Identifiants invalides")
-//                            .build()
-//            );
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body(
-//                    AuthenticationResponse.builder()
-//                            .error("Erreur interne du serveur")
-//                            .build()
-//            );
+//        return ResponseEntity.status(401).body(
+//                AuthenticationResponse.builder()
+//                        .error("Identifiants invalides")
+//                        .build()
+//        );
+//    } catch (Exception e) {
+//        return ResponseEntity.status(500).body(
+//                AuthenticationResponse.builder()
+//                        .error("Erreur interne du serveur")
+//                        .build()
+//        );
 //        }
     }
 }

@@ -20,10 +20,14 @@ import java.io.IOException;
 @Component
 public class ApplicationRequestFilter extends OncePerRequestFilter { //filtre pour intercepter les requêtes
 
-    @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
+
     private ApplicationUserDetailsService userDetailsService;
+    @Autowired
+    public ApplicationRequestFilter(JwtUtil jwtUtil, ApplicationUserDetailsService userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

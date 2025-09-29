@@ -1,6 +1,7 @@
 package com.tchindaClovis.gestiondestock.controller;
 
 import com.tchindaClovis.gestiondestock.controller.api.UtilisateurApi;
+import com.tchindaClovis.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tchindaClovis.gestiondestock.dto.UtilisateurDto;
 import com.tchindaClovis.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +24,28 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
+    public UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto dto) {
+        return utilisateurService.changerMotDePasse(dto);
+    }
+
+    @Override
     public UtilisateurDto findById(Integer id) {
         return utilisateurService.findById(id);
     }
 
     @Override
-    public UtilisateurDto findByNomUtilisateur(String nomUtilisateur) {
-        return utilisateurService.findByNomUtilisateur(nomUtilisateur);
+    public UtilisateurDto findByNom(String nom) {
+        return utilisateurService.findByNom(nom);
     }
 
     @Override
-    public UtilisateurDto findByPrenomUtilisateur(String prenomUtilisateur) {
-        return utilisateurService.findByPrenomUtilisateur(prenomUtilisateur);
+    public UtilisateurDto findByPrenom(String prenom) {
+        return utilisateurService.findByPrenom(prenom);
+    }
+
+    @Override
+    public UtilisateurDto findByEmail(String email) {
+        return utilisateurService.findByEmail(email);
     }
 
     @Override
@@ -46,4 +57,5 @@ public class UtilisateurController implements UtilisateurApi {
     public void delete(Integer id) {
         utilisateurService.delete(id);
     }
+
 }

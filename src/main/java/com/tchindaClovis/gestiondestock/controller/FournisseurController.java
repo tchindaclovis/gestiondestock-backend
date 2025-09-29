@@ -29,9 +29,9 @@ public class FournisseurController implements FournisseurApi {
     }
 
     @Override
-    public FournisseurDto findByNomFournisseur(String nomFournisseur) {
+    public FournisseurDto findByNom(String nom) {
 
-        return fournisseurService.findByNomFournisseur(nomFournisseur);
+        return fournisseurService.findByNom(nom);
     }
 
 

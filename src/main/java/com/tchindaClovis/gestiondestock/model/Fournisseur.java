@@ -13,8 +13,8 @@ import java.util.List;
 @Table(name = "Fournisseur")  //optionnel car par défaut le nom de la classe
 public class Fournisseur extends AbstractEntity{
 
-    @Column(name = "nom")
-    private String nomFournisseur;
+    @Column(name = "nomfournisseur")
+    private String nom;
 
     @Embedded //champ embarqué qui peut être utilisé dan plusieurs autres classes
     private Adresse adresse;

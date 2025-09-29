@@ -57,15 +57,15 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
-    public FournisseurDto findByNomFournisseur(String nomFournisseur) {
-        if(!StringUtils.hasLength(nomFournisseur)){
+    public FournisseurDto findByNom(String nom) {
+        if(!StringUtils.hasLength(nom)){
             log.error("Fournisseur NOM is null");
             return null;
         }
-        Optional<Fournisseur> fournisseur = fournisseurRepository.findFournisseurByNomFournisseur(nomFournisseur);
+        Optional<Fournisseur> fournisseur = fournisseurRepository.findByNom(nom);
         return Optional.of(FournisseurDto.fromEntity(fournisseur.get())).orElseThrow(() ->
                 new EntityNotFoundException(
-                        "Aucun fournisseur avec le NOM = " + nomFournisseur + "n'a ete trouve dans la BDD",
+                        "Aucun fournisseur avec le NOM = " + nom + "n'a ete trouve dans la BDD",
                         ErrorCodes.FOURNISSEUR_NOT_FOUND)
         );
     }

@@ -6,10 +6,20 @@ spring:
     password: JESUSglory
     driver-class-name: org.postgresql.Driver
 
+
+    #pour exécuter les script sql
+#  sql:
+#    init:
+#      mode: always
+
+    ## Tolérer les reférences circulaires
+#  main:
+#    allow-circular-references : true
+
     ## Specify DBMS
   jpa:
     database: POSTGRESQL
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -17,13 +27,14 @@ spring:
           interceptor: com.tchindaClovis.gestiondestock.interceptor.Interceptor
         session_factory:
           statement_inspector: com.tchindaClovis.gestiondestock.interceptor.Interceptor
+    open-in-view: false
 
-    # Hibernate DDL Auto (create, create-drop, update)
+    ## Hibernate DDL Auto (create, create-drop, update, none, validate)
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+#      dialect: org.hibernate.dialect.PostgreSQLDialect
 
-
+    ## Port du serveur
 server:
   port: 8081
 
@@ -39,6 +50,7 @@ jwt:
 
 
 
+# spring.main.allow-circular-references = true
 #springdoc:
 #  api-docs:
 #    enabled: true

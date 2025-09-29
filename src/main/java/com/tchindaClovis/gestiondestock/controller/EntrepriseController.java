@@ -29,12 +29,13 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto findByNomEntreprise(String nomEntreprise) {
-        return entrepriseService.findByNomEntreprise(nomEntreprise);
+    public EntrepriseDto findByNom(String nom) {
+        return entrepriseService.findByNom(nom);
     }
 
     @Override
     public EntrepriseDto findByCodeFiscal(String codeFiscal) {
+
         return entrepriseService.findByCodeFiscal(codeFiscal);
     }
 

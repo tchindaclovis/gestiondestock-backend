@@ -1,21 +1,18 @@
 package com.tchindaClovis.gestiondestock.controller.api;
 
-import com.tchindaClovis.gestiondestock.dto.ArticleDto;
-import com.tchindaClovis.gestiondestock.dto.ClientDto;
+import com.tchindaClovis.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tchindaClovis.gestiondestock.dto.UtilisateurDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
+
 @Tag(name = "Utilisateurs", description = "API de gestion des utilisateurs")
 public interface UtilisateurApi {
     @PostMapping(value = APP_ROOT + "/utilisateurs/create",
@@ -32,6 +29,11 @@ public interface UtilisateurApi {
             }
     )
     UtilisateurDto save(@RequestBody UtilisateurDto dto);
+
+
+    @PostMapping(APP_ROOT + "/utilisateurs/update/password")
+    UtilisateurDto changerMotDePasse(@RequestBody ChangerMotDePasseUtilisateurDto dto);
+
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/{idUtilisateur}",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +59,7 @@ public interface UtilisateurApi {
                 @ApiResponse(responseCode = "404", description = "Aucun utilisateur trouvé avec le nom fourni")
             }
     )
-    UtilisateurDto findByNomUtilisateur(@PathVariable("nomUtilisateur")  String nomUtilisateur);
+    UtilisateurDto findByNom(@PathVariable("nomUtilisateur")  String nom);
 
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/{prenom}",
@@ -71,7 +73,12 @@ public interface UtilisateurApi {
                 @ApiResponse(responseCode = "404", description = "Aucun utilisateur trouvé avec le prenom fourni")
             }
     )
-    UtilisateurDto findByPrenomUtilisateur(@PathVariable("prenomUtilisateur")  String prenomUtilisateur);
+    UtilisateurDto findByPrenom(@PathVariable("prenomUtilisateur")  String prenom);
+
+
+    @GetMapping(APP_ROOT + "/utilisateurs/find/{email}")
+    UtilisateurDto findByEmail(@PathVariable("email") String email);
+
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/all",
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -3,6 +3,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tchindaClovis.gestiondestock.model.*;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,13 +15,13 @@ public class UtilisateurDto {
 
     private Integer id;
 
-    private String nomUtilisateur;
+    private String nom;
 
-    private String prenomUtilisateur;
+    private String prenom;
 
     private String email;
 
-    private String dateDeNaissance;
+    private Instant dateDeNaissance;
 
     private String motDePasse;
 
@@ -37,8 +40,8 @@ public class UtilisateurDto {
 
         return UtilisateurDto.builder()
                 .id(utilisateur.getId())
-                .nomUtilisateur(utilisateur.getNomUtilisateur())
-                .prenomUtilisateur(utilisateur.getPrenomUtilisateur())
+                .nom(utilisateur.getNom())
+                .prenom(utilisateur.getPrenom())
                 .email(utilisateur.getEmail())
                 .dateDeNaissance(utilisateur.getDateDeNaissance())
                 .motDePasse(utilisateur.getMotDePasse())
@@ -60,8 +63,8 @@ public class UtilisateurDto {
         }
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(utilisateurDto.getId());
-        utilisateur.setNomUtilisateur(utilisateurDto.getNomUtilisateur());
-        utilisateur.setPrenomUtilisateur(utilisateurDto.getPrenomUtilisateur());
+        utilisateur.setNom(utilisateurDto.getNom());
+        utilisateur.setPrenom(utilisateurDto.getPrenom());
         utilisateur.setEmail(utilisateurDto.getEmail());
         utilisateur.setDateDeNaissance(utilisateurDto.getDateDeNaissance());
         utilisateur.setMotDePasse(utilisateurDto.getMotDePasse());

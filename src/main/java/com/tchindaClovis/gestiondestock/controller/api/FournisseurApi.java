@@ -58,7 +58,7 @@ public interface FournisseurApi {
                 @ApiResponse(responseCode = "404", description = "Aucun fournisseur trouvé avec le nom fourni")
             }
     )
-    FournisseurDto findByNomFournisseur(@PathVariable("nomFournisseur")  String nomFournisseur);
+    FournisseurDto findByNom(@PathVariable("nomFournisseur")  String nom);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/all",
             produces = MediaType.APPLICATION_JSON_VALUE)

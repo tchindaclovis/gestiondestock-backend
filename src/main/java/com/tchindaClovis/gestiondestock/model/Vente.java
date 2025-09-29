@@ -8,6 +8,8 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -21,8 +23,10 @@ public class Vente extends AbstractEntity{
     @Column(name = "code")
     private String code;
 
-    @Column(name = "datevente")
-    private String dateVente;
+    @Column(name = "datevente"
+            //, columnDefinition = "timestamp without time zone"
+    )
+    private Instant dateVente;
 
     @Column(name = "commentaire")
     private String commentaire;

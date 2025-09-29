@@ -13,8 +13,8 @@ import java.util.List;
 @Table(name = "Entreprise")  //optionnel car par défaut le nom de la classe
 public class Entreprise extends AbstractEntity{
 
-    @Column(name = "nomEntreprise")
-    private String nomEntreprise;
+    @Column(name = "nomentreprise")
+    private String nom;
 
     @Column(name = "description")
     private String description;

@@ -9,10 +9,11 @@ import java.util.Optional;
 
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer> {
 
-    Optional<Utilisateur> findUtilisateurByNomUtilisateur(String nomUtilisateur);
-    Optional<Utilisateur> findUtilisateurByPrenomUtilisateur(String prenomUtilisateur);
+    Optional<Utilisateur> findByNom(String nom);
+    Optional<Utilisateur> findByPrenom(String prenom);
 
     // JPQL query
     @Query(value = "select u from Utilisateur u where u.email = :email")
     Optional<Utilisateur> findUtilisateurByEmail(@Param("email") String email);// elle va chercher un utilisateur par son email dans la BDD
+
 }

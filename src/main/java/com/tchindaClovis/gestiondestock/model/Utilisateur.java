@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -15,16 +17,18 @@ import java.util.List;
 public class Utilisateur extends AbstractEntity{
 
     @Column(name = "nomUtilisateur")
-    private String nomUtilisateur;
+    private String nom;
 
     @Column(name = "prenomUtilisateur")
-    private String prenomUtilisateur;
+    private String prenom;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "datedenaissance")
-    private String dateDeNaissance;
+    @Column(name = "datedenaissance"
+            //, columnDefinition = "timestamp without time zone"
+    )
+    private Instant dateDeNaissance;
 
     @Column(name = "motdepasse")
     private String motDePasse;

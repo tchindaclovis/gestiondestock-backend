@@ -15,11 +15,14 @@ import java.util.List;
 
 @Service
 public class ApplicationUserDetailsService implements UserDetailsService {
-    @Autowired
     private UtilisateurService service;
+    @Autowired
+    public ApplicationUserDetailsService(UtilisateurService service) {
+        this.service = service;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UtilisateurDto utilisateur = service.findByEmail(email);
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -28,6 +31,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
         return new ExtendedUser(utilisateur.getEmail(), utilisateur.getMotDePasse(), utilisateur.getEntreprise().getId(), authorities);
     }
 }
+
 
 
 

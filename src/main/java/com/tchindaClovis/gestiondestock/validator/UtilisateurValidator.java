@@ -16,10 +16,10 @@ public class UtilisateurValidator {
             return errors;
         }
 
-        if(!StringUtils.hasLength(utilisateurDto.getNomUtilisateur())){
+        if(!StringUtils.hasLength(utilisateurDto.getNom())){
             errors.add("Veuillez renseigner le nom de l'utilisateur");
         }
-        if(!StringUtils.hasLength(utilisateurDto.getPrenomUtilisateur())){
+        if(!StringUtils.hasLength(utilisateurDto.getPrenom())){
             errors.add("Veuillez renseigner le prenom de l'utilisateur");
         }
         if(!StringUtils.hasLength(utilisateurDto.getEmail())){

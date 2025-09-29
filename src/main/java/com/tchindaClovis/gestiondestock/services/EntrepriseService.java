@@ -6,7 +6,7 @@ import java.util.List;
 public interface EntrepriseService {
     EntrepriseDto save(EntrepriseDto dto);
     EntrepriseDto findById(Integer id);
-    EntrepriseDto findByNomEntreprise(String nomEntreprise);
+    EntrepriseDto findByNom(String nom);
     EntrepriseDto findByCodeFiscal(String codeFiscal);
     List<EntrepriseDto> findAll();
     void delete(Integer id);

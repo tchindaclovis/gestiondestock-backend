@@ -15,7 +15,7 @@ public class FournisseurValidator {
             return errors;
         }
 
-        if(!StringUtils.hasLength(dto.getNomFournisseur())){
+        if(!StringUtils.hasLength(dto.getNom())){
             errors.add("Veuillez renseigner le nom du fournisseur");
         }
         if(!StringUtils.hasLength(dto.getEmail())){

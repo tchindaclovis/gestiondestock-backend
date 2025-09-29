@@ -6,7 +6,7 @@ import java.util.List;
 public interface FournisseurService {
     FournisseurDto save(FournisseurDto dto);
     FournisseurDto findById(Integer id);
-    FournisseurDto findByNomFournisseur(String nomFournisseur);
+    FournisseurDto findByNom(String nom);
     List<FournisseurDto> findAll();
     void delete(Integer id);
 }

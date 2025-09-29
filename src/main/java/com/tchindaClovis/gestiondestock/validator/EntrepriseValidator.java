@@ -21,7 +21,7 @@ public class EntrepriseValidator {
             return errors;
         }
 
-        if(!StringUtils.hasLength(dto.getNomEntreprise())){
+        if(!StringUtils.hasLength(dto.getNom())){
             errors.add("Veuillez renseigner le nom de l'entreprise");
         }
         if(!StringUtils.hasLength(dto.getDescription())){

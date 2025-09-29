@@ -59,7 +59,7 @@ public interface EntrepriseApi {
                 @ApiResponse(responseCode = "404", description = "Aucune entreprise trouvé avec le nom fourni")
             }
     )
-    EntrepriseDto findByNomEntreprise(@PathVariable("nomEntreprise")  String nomEntreprise);
+    EntrepriseDto findByNom(@PathVariable("nomEntreprise")  String nom);
 
     @GetMapping(value = APP_ROOT + "/entreprises/{codeFiscal}",
             produces = MediaType.APPLICATION_JSON_VALUE)

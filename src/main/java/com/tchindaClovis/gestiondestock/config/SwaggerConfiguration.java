@@ -59,20 +59,7 @@ public class SwaggerConfiguration {
 //import org.springframework.context.annotation.Configuration;
 //
 //@Configuration
-//@OpenAPIDefinition(
-//        info = @Info(
-//                title = "Gestion de stock REST API",
-//                description = "Gestion de stock API documentation",
-//                version = "v1"
-//        ),
-//        security = @SecurityRequirement(name = "bearerAuth")
-//)
-//@SecurityScheme(
-//        name = "bearerAuth",
-//        type = SecuritySchemeType.HTTP,
-//        scheme = "bearer",
-//        bearerFormat = "JWT"
-//)
+
 //public class SwaggerConfiguration {
 //
 //    public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -95,6 +82,24 @@ public class SwaggerConfiguration {
 //                        ));
 //    }
 //}
+//@OpenAPIDefinition(
+//        info = @Info(
+//                title = "Gestion de stock REST API",
+//                description = "Gestion de stock API documentation",
+//                version = "v1"
+//        ),
+//        security = @SecurityRequirement(name = "bearerAuth")
+//)
+//@SecurityScheme(
+//        name = "bearerAuth",
+//        type = SecuritySchemeType.HTTP,
+//        scheme = "bearer",
+//        bearerFormat = "JWT"
+//)
+
+
+
+
 
 
 
