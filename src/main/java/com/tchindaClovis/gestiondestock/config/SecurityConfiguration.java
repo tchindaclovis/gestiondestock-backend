@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +55,9 @@ public class SecurityConfiguration {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/v3/api-docs/**",
-                                "/swagger-ui/**"
+                                "/swagger-ui/**",
+                                "/api/files/upload",
+                                "/api/files/delete/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -79,7 +82,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
 }
 

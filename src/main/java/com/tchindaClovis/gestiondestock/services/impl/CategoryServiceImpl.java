@@ -30,9 +30,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto save(CategoryDto dto) {
         List<String> errors = CategoryValidator.validate(dto);
-        if(!errors.isEmpty()){
-            log.error("Category is not valid{}", dto);
-            throw new InvalidEntityException("La categorie n'est pas valide", ErrorCodes.CATEGORY_NOT_VALID, errors);
+        if (!errors.isEmpty()) {
+            log.error("Category is not valid {}", dto);
+            // ✅ ASSUREZ-VOUS d'utiliser le bon code d'erreur
+            throw new InvalidEntityException(
+                    "La catégorie n'est pas valide",
+                    ErrorCodes.CATEGORY_NOT_VALID,  // ← Vérifiez cette ligne
+                    errors
+            );
         }
         return CategoryDto.fromEntity(categoryRepository.save(CategoryDto.toEntity(dto)));
 
@@ -46,13 +51,12 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Category ID is null");
             return null;
         }
-        Optional<Category> category = categoryRepository.findById(id);
-
-        return Optional.of(CategoryDto.fromEntity(category.get())).orElseThrow(() ->
-                new EntityNotFoundException(
-                        "Aucune categorie avec l'ID = " + id + "n'a ete trouve dans la BDD",
+        return categoryRepository.findById(id)
+                .map(CategoryDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Aucune categorie avec l'ID = " + id + " n'a ete trouve dans la BDD",
                         ErrorCodes.CATEGORY_NOT_FOUND)
-        );
+                );
     }
 
     @Override

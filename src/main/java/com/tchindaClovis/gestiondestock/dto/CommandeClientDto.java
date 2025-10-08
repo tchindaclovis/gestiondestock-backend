@@ -1,4 +1,5 @@
 package com.tchindaClovis.gestiondestock.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tchindaClovis.gestiondestock.model.CommandeClient;
 import com.tchindaClovis.gestiondestock.model.EEtatCommande;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class  CommandeClientDto {
 
     private ClientDto client;
 
+    @JsonIgnore  //pour que ceci ne soit pas mappé car on n'a pas besoin de l'objet LCC dans l'objet CC
     private List<LigneCommandeClientDto> ligneCommandeClients;
 
     public static CommandeClientDto fromEntity (CommandeClient commandeClient){  //permet de faire un mapping de l'entité vers le DTO
@@ -51,5 +53,9 @@ public class  CommandeClientDto {
         commandeClient.setClient(ClientDto.toEntity(commandeClientDto.getClient()));
 
         return commandeClient;
+    }
+
+    public boolean isCommandeLivree() {
+        return EEtatCommande.LIVREE.equals(this.etatCommande);
     }
 }

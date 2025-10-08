@@ -2,6 +2,9 @@ package com.tchindaClovis.gestiondestock.controller;
 
 import com.tchindaClovis.gestiondestock.controller.api.ArticleApi;
 import com.tchindaClovis.gestiondestock.dto.ArticleDto;
+import com.tchindaClovis.gestiondestock.dto.LigneCommandeClientDto;
+import com.tchindaClovis.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.tchindaClovis.gestiondestock.dto.LigneVenteDto;
 import com.tchindaClovis.gestiondestock.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +43,26 @@ public class ArticleController implements ArticleApi {
     @Override
     public List<ArticleDto> findAll() {
         return articleService.findAll();
+    }
+
+    @Override
+    public List<LigneVenteDto> findHistoriqueVentes(Integer idArticle) {
+        return articleService.findHistoriqueVentes(idArticle);
+    }
+
+    @Override
+    public List<LigneCommandeClientDto> findHistoriaueCommandeClient(Integer idArticle) {
+        return articleService.findHistoriaueCommandeClient(idArticle);
+    }
+
+    @Override
+    public List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle) {
+        return articleService.findHistoriqueCommandeFournisseur(idArticle);
+    }
+
+    @Override
+    public List<ArticleDto> findAllArticleByIdCategory(Integer idCategory) {
+        return articleService.findAllArticleByIdCategory(idCategory);
     }
 
     @Override

@@ -21,6 +21,7 @@ public class MvtStock extends AbstractEntity {
     private BigDecimal quantite;
 
     @Column(name = "typemvtstock")
+    @Enumerated(EnumType.STRING)
     private ETypeMvtStock typeMvt;
 
     @Column(name = "sourcemvt")

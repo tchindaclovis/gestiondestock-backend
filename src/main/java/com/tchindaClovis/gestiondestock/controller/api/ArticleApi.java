@@ -1,6 +1,9 @@
 package com.tchindaClovis.gestiondestock.controller.api;
 
 import com.tchindaClovis.gestiondestock.dto.ArticleDto;
+import com.tchindaClovis.gestiondestock.dto.LigneCommandeClientDto;
+import com.tchindaClovis.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.tchindaClovis.gestiondestock.dto.LigneVenteDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -67,6 +70,18 @@ public interface ArticleApi {
             }
     )
     List<ArticleDto> findAll();
+
+    @GetMapping(value = APP_ROOT + "/articles/historique/vente/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneVenteDto> findHistoriqueVentes(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = APP_ROOT + "/articles/historique/commandeclient/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneCommandeClientDto> findHistoriaueCommandeClient(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = APP_ROOT + "/articles/historique/commandefournisseur/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = APP_ROOT + "/articles/filter/category/{idCategory}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<ArticleDto> findAllArticleByIdCategory(@PathVariable("idCategory") Integer idCategory);
 
     @DeleteMapping(value = APP_ROOT + "/articles/delete/{idArticle}")
     @Operation(
