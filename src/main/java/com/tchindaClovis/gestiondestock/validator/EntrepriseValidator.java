@@ -14,10 +14,9 @@ public class EntrepriseValidator {
             errors.add("Veuillez renseigner le nom de l'entreprise");
             errors.add("Veuillez renseigner la description de l'entreprise");
             errors.add("Veuillez renseigner le Code Fiscal de l'entreprise");
-            errors.add("Veuillez renseigner la photo de l'entreprise");
             errors.add("Veuillez renseigner l'email de l'entreprise");
             errors.add("Veuillez renseigner le numero de telephone de l'entreprise");
-            errors.add("Veuillez renseigner le site internet de l'entreprise");
+            errors.addAll(AdresseValidator.validate(null));
             return errors;
         }
 
@@ -30,18 +29,13 @@ public class EntrepriseValidator {
         if(!StringUtils.hasLength(dto.getCodeFiscal())){
             errors.add("Veuillez renseigner le Code Fiscal de l'entreprise");
         }
-        if(!StringUtils.hasLength(dto.getPhoto())){
-            errors.add("Veuillez renseigner la photo de l'entreprise");
-        }
         if(!StringUtils.hasLength(dto.getEmail())){
             errors.add("Veuillez renseigner l'email de l'entreprise");
         }
         if(!StringUtils.hasLength(dto.getNumTel())){
             errors.add("Veuillez renseigner le numero de telephone de l'entreprise");
         }
-        if(!StringUtils.hasLength(dto.getSiteWeb())){
-            errors.add("Veuillez renseigner le site internet de l'entreprise");
-        }
+        errors.addAll(AdresseValidator.validate(dto.getAdresse()));
         return errors;
     }
 }

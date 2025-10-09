@@ -19,7 +19,8 @@ spring:
       ## Specify DBMS
   jpa:
     database: POSTGRESQL
-    show-sql: true
+      ## Exposer les requête sql lorsqu'on les envoi à notre API(true or false)
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -31,7 +32,7 @@ spring:
 
       ## Hibernate DDL Auto (create, create-drop, update, none, validate)
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
       ## Port du serveur
@@ -39,21 +40,40 @@ server:
   port: 8081
 
 
+      ##Activation de Spring Doc
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+      ## Logs de debug pour voir ce qui se passe
+logging:
+  level:
+    org:
+      springdoc: DEBUG
+      springframework:
+        web: DEBUG
+    com:
+      votrepackage: DEBUG
+
+
       ## Configuration MinIO
-#minio:
-#  access-key: minioadmin
-#  secret-key: minioadmin
-#  bucket-name: pictures
-#  endpoint: http://localhost:9000
-#  secure: false
-#  default-folder: uploads/
-#  url: http://127.0.0.1:9000
+minio:
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: imagephoto
+  endpoint: http://localhost:9000
+  secure: false
+  default-folder: uploads/
+  url: http://127.0.0.1:9000
 
       ##Temps d'expiration des URLs signées (en secondes)
-#  presigned-url-expiry: 3600
-#
-#  public-url: false
-#  presigned-expiry: 604800
+  presigned-url-expiry: 3600
+
+  public-url: false
+  presigned-expiry: 604800
 
 
       ## activer le mode debug

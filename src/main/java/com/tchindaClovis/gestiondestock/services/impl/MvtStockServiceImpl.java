@@ -85,7 +85,8 @@ public class MvtStockServiceImpl implements MvtStockService {
         List<String> errors = MvtStockValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Article is not valid {}", dto);
-            throw new InvalidEntityException("Le mouvement du stock n'est pas valide", ErrorCodes.MVT_STOCK_NOT_VALID, errors);
+            throw new InvalidEntityException("Le mouvement du stock n'est pas valide",
+                    ErrorCodes.MVT_STOCK_NOT_VALID, errors);
         }
         dto.setQuantite(
                 BigDecimal.valueOf(

@@ -11,6 +11,7 @@ public interface MinioService {
      */
     String savePhoto(InputStream photo, String title, String filename);
 
+
     /**
      * Sauvegarde une photo à partir d'un MultipartFile
      */

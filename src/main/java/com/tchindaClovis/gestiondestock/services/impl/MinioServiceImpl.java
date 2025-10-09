@@ -5,6 +5,7 @@ import io.minio.*;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import java.util.UUID;
 //@RequiredArgsConstructor
 public class MinioServiceImpl implements MinioService {
     private final MinioClient minioClient;
-
 
     @Value("${minio.bucket-name:pictures}")
     private String bucketName;
@@ -28,7 +28,7 @@ public class MinioServiceImpl implements MinioService {
     // Répertoire par défaut pour les photos
     private static final String PHOTOS_DIRECTORY = "photos/";
 
-//    @Autowired
+    @Autowired
     public MinioServiceImpl(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
@@ -104,8 +104,6 @@ public class MinioServiceImpl implements MinioService {
         }
     }
 
-
-
     @Override
     public void deletePhoto(String photoUrl) {
         try {
@@ -142,7 +140,6 @@ public class MinioServiceImpl implements MinioService {
             return false;
         }
     }
-
 
     /**
      * Méthode privée pour uploader la photo vers MinIO

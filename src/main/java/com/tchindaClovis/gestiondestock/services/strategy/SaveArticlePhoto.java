@@ -30,7 +30,8 @@ public class SaveArticlePhoto implements Strategy<ArticleDto> {
     ArticleDto article = articleService.findById(id);
     String urlPhoto = minioService.savePhoto(photo, titre);
     if (!StringUtils.hasLength(urlPhoto)) {
-      throw new InvalidOperationException("Erreur lors de l'enregistrement de photo de l'article", ErrorCodes.UPDATE_PHOTO_EXCEPTION);
+      throw new InvalidOperationException("Erreur lors de l'enregistrement de photo de l'article",
+              ErrorCodes.UPDATE_PHOTO_EXCEPTION);
     }
     article.setPhoto(urlPhoto);
     return articleService.save(article);

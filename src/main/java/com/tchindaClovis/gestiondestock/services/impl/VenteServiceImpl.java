@@ -118,7 +118,7 @@ public class VenteServiceImpl implements VenteService {
         }
         List<LigneVente> ligneVentes = ligneVenteRepository.findAllByVenteId(id);
         if (!ligneVentes.isEmpty()) {
-            throw new InvalidOperationException("Impossible de supprimer une vente ...",
+            throw new InvalidOperationException("Impossible de supprimer une vente avec ligne de vente",
                     ErrorCodes.VENTE_ALREADY_IN_USE);
         }
         venteRepository.deleteById(id);

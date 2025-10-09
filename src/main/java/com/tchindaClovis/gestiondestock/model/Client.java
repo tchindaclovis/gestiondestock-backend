@@ -34,5 +34,6 @@ public class Client extends AbstractEntity{
     private Integer idEntreprise;  //rien à voir avec les règle UML
 
     @OneToMany(mappedBy = "client")
+//    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)  //permet de suprimer l'objet client avec toutes les commandeClient
     private List<CommandeClient> commandeClients;
 }

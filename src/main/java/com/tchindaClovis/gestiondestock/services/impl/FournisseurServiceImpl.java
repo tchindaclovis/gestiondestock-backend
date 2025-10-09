@@ -5,8 +5,12 @@ import com.tchindaClovis.gestiondestock.dto.FournisseurDto;
 import com.tchindaClovis.gestiondestock.exception.EntityNotFoundException;
 import com.tchindaClovis.gestiondestock.exception.ErrorCodes;
 import com.tchindaClovis.gestiondestock.exception.InvalidEntityException;
+import com.tchindaClovis.gestiondestock.exception.InvalidOperationException;
 import com.tchindaClovis.gestiondestock.model.Client;
+import com.tchindaClovis.gestiondestock.model.CommandeClient;
+import com.tchindaClovis.gestiondestock.model.CommandeFournisseur;
 import com.tchindaClovis.gestiondestock.model.Fournisseur;
+import com.tchindaClovis.gestiondestock.repository.CommandeFournisseurRepository;
 import com.tchindaClovis.gestiondestock.repository.FournisseurRepository;
 import com.tchindaClovis.gestiondestock.services.FournisseurService;
 import com.tchindaClovis.gestiondestock.validator.FournisseurValidator;
@@ -24,10 +28,13 @@ import java.util.stream.Collectors;
 public class FournisseurServiceImpl implements FournisseurService {
 
     private FournisseurRepository fournisseurRepository;
+    private CommandeFournisseurRepository commandeFournisseurRepository;
 
     @Autowired
-    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository) {
+    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository,
+                                  CommandeFournisseurRepository commandeFournisseurRepository) {
         this.fournisseurRepository = fournisseurRepository;
+        this.commandeFournisseurRepository = commandeFournisseurRepository;
     }
 
     @Override
@@ -78,11 +85,17 @@ public class FournisseurServiceImpl implements FournisseurService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             log.error("Fournisseur ID is null");
             return;
+        }
+        List<CommandeFournisseur> commandeFournisseur = commandeFournisseurRepository.findAllByFournisseurId(id);
+        if (!commandeFournisseur.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un fournisseur qui a deja des commandes",
+                    ErrorCodes.FOURNISSEUR_ALREADY_IN_USE);
         }
         fournisseurRepository.deleteById(id);
     }

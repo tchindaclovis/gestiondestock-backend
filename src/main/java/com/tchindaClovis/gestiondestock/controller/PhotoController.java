@@ -1,43 +1,86 @@
 package com.tchindaClovis.gestiondestock.controller;
 
+import com.tchindaClovis.gestiondestock.controller.api.PhotoApi;
+import com.tchindaClovis.gestiondestock.services.strategy.StrategyPhotoContext;
 import com.tchindaClovis.gestiondestock.services.MinioService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-
-import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
+import io.minio.errors.MinioException;
 
 @RestController
-@RequestMapping(APP_ROOT + "/pictures")
+
 //@RequiredArgsConstructor
-public class PhotoController {
+public class PhotoController implements PhotoApi {
     private final MinioService minioService;
-
+    private final StrategyPhotoContext strategyPhotoContext;
     @Autowired
-    public PhotoController(MinioService minioService) {
+    public PhotoController(MinioService minioService, StrategyPhotoContext strategyPhotoContext) {
         this.minioService = minioService;
+        this.strategyPhotoContext = strategyPhotoContext;
+    }
+//    @Override
+//    public String uploadPhoto(MultipartFile file, String title) {
+//        try {
+//            // Utilisation équivalente à l'ancien service Flickr
+//            return minioService.savePhoto(file.getInputStream(),
+//                    title != null ? title : file.getOriginalFilename());
+//        } catch (IOException e) {
+//            throw new RuntimeException("Erreur lecture fichier: " + e.getMessage(), e);
+//        }
+//    }
+
+    @Override
+    public Object savePhoto(String context, Integer id, MultipartFile photo, String title) throws IOException, MinioException {
+        return strategyPhotoContext.savePhoto(context, id, photo.getInputStream(), title);
     }
 
-    @PostMapping("/upload")
-    public String uploadPhoto(@RequestParam("file") MultipartFile file,
-                              @RequestParam(value = "title", required = false) String title) {
-        try {
-            // Utilisation équivalente à l'ancien service Flickr
-            return minioService.savePhoto(file.getInputStream(),
-                    title != null ? title : file.getOriginalFilename());
-        } catch (IOException e) {
-            throw new RuntimeException("Erreur lecture fichier: " + e.getMessage(), e);
-        }
-    }
 
-    @DeleteMapping
-    public void deletePhoto(@RequestParam String photoUrl) {
+    @Override
+    public void deletePhoto(String photoUrl) {
         minioService.deletePhoto(photoUrl);
     }
 }
+
+
+//package com.tchindaClovis.gestiondestock.controller;
+//
+//import com.tchindaClovis.gestiondestock.services.strategy.StrategyPhotoContext;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.multipart.MultipartFile;
+//import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
+//
+//@RestController
+//@RequestMapping(APP_ROOT + "/photos")
+//public class PhotoController {
+//
+//    private final StrategyPhotoContext strategyPhotoContext;
+//
+//    public PhotoController(StrategyPhotoContext strategyPhotoContext) {
+//        this.strategyPhotoContext = strategyPhotoContext;
+//    }
+//
+//    @PostMapping("/{type}")
+//    public ResponseEntity<String> uploadPhoto(
+//            @PathVariable String type,
+//            @RequestParam("photo") MultipartFile photo) {
+//
+//        try {
+//            SavePhoto strategy = strategyPhotoContext.getStrategy(type.toUpperCase());
+//            String filePath = strategy.savePhoto(photo);
+//
+//            return ResponseEntity.ok("Photo enregistrée avec succès: " + filePath);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
+//        }
+//    }
+//}
+
+
+
+
 
 
 

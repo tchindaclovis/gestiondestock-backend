@@ -42,11 +42,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         List<String> errors = UtilisateurValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid {}", dto);
-            throw new InvalidEntityException("L'utilisateur n'est pas valide", ErrorCodes.UTILISATEUR_NOT_VALID, errors);
+            throw new InvalidEntityException("L'utilisateur n'est pas valide",
+                    ErrorCodes.UTILISATEUR_NOT_VALID, errors);
         }
 
         if(userAlreadyExists(dto.getEmail())) {
-            throw new InvalidEntityException("Un autre utilisateur avec le meme email existe deja", ErrorCodes.UTILISATEUR_ALREADY_EXISTS,
+            throw new InvalidEntityException("Un autre utilisateur avec le meme email existe deja",
+                    ErrorCodes.UTILISATEUR_ALREADY_EXISTS,
                     Collections.singletonList("Un autre utilisateur avec le meme email existe deja dans la BDD"));
         }
 
@@ -140,7 +142,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(dto.getId());
         if (utilisateurOptional.isEmpty()) {
             log.warn("Aucun utilisateur n'a ete trouve avec l'ID " + dto.getId());
-            throw new EntityNotFoundException("Aucun utilisateur n'a ete trouve avec l'ID " + dto.getId(), ErrorCodes.UTILISATEUR_NOT_FOUND);
+            throw new EntityNotFoundException("Aucun utilisateur n'a ete trouve avec l'ID " + dto.getId(),
+                    ErrorCodes.UTILISATEUR_NOT_FOUND);
         }
 
         Utilisateur utilisateur = utilisateurOptional.get();

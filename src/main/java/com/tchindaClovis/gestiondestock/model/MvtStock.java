@@ -24,7 +24,7 @@ public class MvtStock extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private ETypeMvtStock typeMvt;
 
-    @Column(name = "sourcemvt")
+    @Column(name = "sourcemvt")  //pour ressortir la destination du mouvement de stock
     @Enumerated(EnumType.STRING)
     private ESourceMvtStock sourceMvt;
 

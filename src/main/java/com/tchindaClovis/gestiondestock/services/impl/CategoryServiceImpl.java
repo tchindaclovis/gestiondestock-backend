@@ -4,7 +4,10 @@ import com.tchindaClovis.gestiondestock.dto.CategoryDto;
 import com.tchindaClovis.gestiondestock.exception.EntityNotFoundException;
 import com.tchindaClovis.gestiondestock.exception.ErrorCodes;
 import com.tchindaClovis.gestiondestock.exception.InvalidEntityException;
+import com.tchindaClovis.gestiondestock.exception.InvalidOperationException;
+import com.tchindaClovis.gestiondestock.model.Article;
 import com.tchindaClovis.gestiondestock.model.Category;
+import com.tchindaClovis.gestiondestock.repository.ArticleRepository;
 import com.tchindaClovis.gestiondestock.repository.CategoryRepository;
 import com.tchindaClovis.gestiondestock.services.CategoryService;
 import com.tchindaClovis.gestiondestock.validator.CategoryValidator;
@@ -21,12 +24,13 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private CategoryRepository categoryRepository;
+    private ArticleRepository articleRepository;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
-
     @Override
     public CategoryDto save(CategoryDto dto) {
         List<String> errors = CategoryValidator.validate(dto);
@@ -81,11 +85,15 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             log.error("Category ID is null");
             return;
+        }
+        List<Article> articles = articleRepository.findAllByCategoryId(id);
+        if (!articles.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer cette categorie qui est deja utilise",
+                    ErrorCodes.CATEGORY_ALREADY_IN_USE);
         }
         categoryRepository.deleteById(id);
     }

@@ -154,7 +154,8 @@ public class ArticleServiceImpl implements ArticleService {
         }
         List<LigneCommandeClient> ligneCommandeClients = commandeClientRepository.findAllByArticleId(id);
         if (!ligneCommandeClients.isEmpty()) {
-            throw new InvalidOperationException("Impossible de supprimer un article deja utilise dans des commandes client", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+            throw new InvalidOperationException("Impossible de supprimer un article deja utilise dans des commandes client",
+                    ErrorCodes.ARTICLE_ALREADY_IN_USE);
         }
         List<LigneCommandeFournisseur> ligneCommandeFournisseurs = commandeFournisseurRepository.findAllByArticleId(id);
         if (!ligneCommandeFournisseurs.isEmpty()) {
