@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -41,12 +44,14 @@ public class SecurityConfiguration {
                                            ApplicationUserDetailsService userDetailsService,
                                            ApplicationRequestFilter applicationRequestFilter) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http
+//                .cors().and() // active le CORS
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/"+ AUTHENTICATION_ENDPOINT + "/authenticate",
                                 "/"+ APP_ROOT + "/entreprises/create",
-//                                "/" + APP_ROOT + "/utilisateur/update/password",
+                                "/" + APP_ROOT + "/utilisateur/update/password",
                                 "/v2/api-docs",
                                 "/swagger-resources",
                                 "/swagger-resources/**",
@@ -70,18 +75,47 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+//        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:4200");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")  // Permettre CORS sur toutes les routes
+//                        .allowedOrigins("http://localhost:4200", "http://localhost:4200/assets/product.png") // L'origine de votre app Angular
+//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Méthodes autorisées
+//                        .allowedHeaders("*") // En-têtes autorisés (important pour Authorization)
+//                        .allowCredentials(true); // Autoriser l'envoi de cookies/auth
+//            }
+//        };
+//    }
 
 }
 

@@ -16,6 +16,16 @@ spring:
 #  main:
 #    allow-circular-references : true
 
+
+  ## Configurer la taille des fichiers
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      file-size-threshold: 2KB
+
+
       ## Specify DBMS
   jpa:
     database: POSTGRESQL
@@ -32,7 +42,7 @@ spring:
 
       ## Hibernate DDL Auto (create, create-drop, update, none, validate)
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
       ## Port du serveur

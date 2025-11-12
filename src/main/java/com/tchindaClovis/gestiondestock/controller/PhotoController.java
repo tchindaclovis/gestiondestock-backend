@@ -4,13 +4,13 @@ import com.tchindaClovis.gestiondestock.controller.api.PhotoApi;
 import com.tchindaClovis.gestiondestock.services.strategy.StrategyPhotoContext;
 import com.tchindaClovis.gestiondestock.services.MinioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import io.minio.errors.MinioException;
 
 @RestController
-
 //@RequiredArgsConstructor
 public class PhotoController implements PhotoApi {
     private final MinioService minioService;
@@ -32,7 +32,9 @@ public class PhotoController implements PhotoApi {
 //    }
 
     @Override
-    public Object savePhoto(String context, Integer id, MultipartFile photo, String title) throws IOException, MinioException {
+    @PreAuthorize("hasAnyRole('minioadmin','minioadmin')")
+    public Object savePhoto(String context, Integer id, MultipartFile photo, String title)
+            throws IOException, MinioException {
         return strategyPhotoContext.savePhoto(context, id, photo.getInputStream(), title);
     }
 
@@ -42,6 +44,24 @@ public class PhotoController implements PhotoApi {
         minioService.deletePhoto(photoUrl);
     }
 }
+
+
+
+
+//    private final StrategyPhotoContext strategyPhotoContext;
+//
+//    @Autowired
+//    public PhotoController(StrategyPhotoContext strategyPhotoContext) {
+//        this.strategyPhotoContext = strategyPhotoContext;
+//    }
+//
+//    @Override
+//    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+//    public Object savePhoto(String context, Integer id, MultipartFile photo, String title) throws IOException, FlickrException {
+//        return strategyPhotoContext.savePhoto(context, id, photo.getInputStream(), title);
+//    }
+
+
 
 
 //package com.tchindaClovis.gestiondestock.controller;

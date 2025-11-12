@@ -2,6 +2,7 @@ package com.tchindaClovis.gestiondestock.services.impl;
 
 import com.tchindaClovis.gestiondestock.services.MinioService;
 import io.minio.*;
+import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -155,7 +156,7 @@ public class MinioServiceImpl implements MinioService {
                             .bucket(bucketName)
                             .object(filename)
                             .stream(photo, -1, 10485760) // Taille maximale de 10MB
-                            .contentType("image/png")
+                            .contentType("image/jpeg")
                             .build()
             );
 
@@ -178,6 +179,7 @@ public class MinioServiceImpl implements MinioService {
             // TOUJOURS utiliser les URLs pré-signées - plus sécurisé
             return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET) // ✅ Indiquer la méthode
                             .bucket(bucketName)
                             .object(filename)
                             .expiry(presignedExpiry)
@@ -196,7 +198,7 @@ public class MinioServiceImpl implements MinioService {
         String safeTitle = title != null ?
                 title.replaceAll("[^a-zA-Z0-9.-]", "_") : "photo";
         String uuid = UUID.randomUUID().toString();
-        return PHOTOS_DIRECTORY + safeTitle + "_" + uuid + ".png";
+        return PHOTOS_DIRECTORY + safeTitle + "_" + uuid + ".jpeg";
     }
 
     /**

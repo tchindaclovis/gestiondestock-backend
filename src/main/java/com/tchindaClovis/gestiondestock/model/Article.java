@@ -16,8 +16,11 @@ public class Article extends AbstractEntity{
     @Column(name = "codearticle")
     private String codeArticle;
 
-    @Column(name = "gesignation")
+    @Column(name = "designation")
     private String designation;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "prixunitaire")
     private BigDecimal prixUnitaireHt;
@@ -28,7 +31,7 @@ public class Article extends AbstractEntity{
     @Column(name = "prixunitairettc")
     private BigDecimal prixUnitaireTtc;
 
-    @Column(name = "photo")
+    @Column(name = "photo",length = 1024)
     private String photo;  //String parceque ça ne sera pas stocké dans la BDD mais dans le cloud
 
     @ManyToOne

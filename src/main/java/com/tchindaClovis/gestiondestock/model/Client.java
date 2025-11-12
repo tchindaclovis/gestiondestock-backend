@@ -21,7 +21,7 @@ public class Client extends AbstractEntity{
     @Embedded //champ embarqué qui peut être utilisé dan plusieurs autres classes
     private Adresse adresse;
 
-    @Column(name = "photo")
+    @Column(name = "photo",columnDefinition = "TEXT")
     private String photo;
 
     @Column(name = "email")

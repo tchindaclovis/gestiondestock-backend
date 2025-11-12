@@ -33,7 +33,7 @@ public interface ArticleApi {
     )
     ArticleDto save(@RequestBody ArticleDto dto);
 
-    @GetMapping(value = APP_ROOT + "/articles/{idArticle}",
+    @GetMapping(value = APP_ROOT + "/articles/idArticle/{idArticle}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Rechercher un article par ID",
@@ -46,7 +46,7 @@ public interface ArticleApi {
     )
     ArticleDto findById(@PathVariable("idArticle") Integer id);
 
-    @GetMapping(value = APP_ROOT + "/articles/{codeArticle}",
+    @GetMapping(value = APP_ROOT + "/articles/codeArticle/{codeArticle}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Rechercher un article par code",
