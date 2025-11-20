@@ -59,6 +59,7 @@ public interface ArticleApi {
     )
     ArticleDto findByCodeArticle(@PathVariable("codeArticle") String codeArticle);
 
+
     @GetMapping(value = APP_ROOT + "/articles/all",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
