@@ -1,7 +1,5 @@
 package com.tchindaClovis.gestiondestock.config;
 
-import java.util.Arrays;
-import java.util.Collections;
 import com.tchindaClovis.gestiondestock.services.auth.ApplicationUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,23 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
-import static org.springframework.security.config.Customizer.withDefaults;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -45,13 +37,13 @@ public class SecurityConfiguration {
                                            ApplicationRequestFilter applicationRequestFilter) throws Exception {
 
         http
-//                .cors().and() // active le CORS
+                .cors().and() // active le CORS
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/"+ AUTHENTICATION_ENDPOINT + "/authenticate",
                                 "/"+ APP_ROOT + "/entreprises/create",
-                                "/" + APP_ROOT + "/utilisateur/update/password",
+                                "/" + APP_ROOT + "/utilisateurs/update/password",
                                 "/v2/api-docs",
                                 "/swagger-resources",
                                 "/swagger-resources/**",
@@ -75,32 +67,30 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
 
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:4200");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+}
+
+
 
 
 //    @Bean
@@ -116,11 +106,6 @@ public class SecurityConfiguration {
 //            }
 //        };
 //    }
-
-}
-
-
-
 
 
 
