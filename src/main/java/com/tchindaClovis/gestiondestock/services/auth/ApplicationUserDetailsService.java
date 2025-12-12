@@ -30,6 +30,10 @@ public class ApplicationUserDetailsService implements UserDetailsService {
 
         return new ExtendedUser(utilisateur.getEmail(), utilisateur.getMotDePasse(), utilisateur.getEntreprise().getId(), authorities);
     }
+
+//    public int getIdEntreprise() {
+//        return 0;
+//    }
 }
 
 

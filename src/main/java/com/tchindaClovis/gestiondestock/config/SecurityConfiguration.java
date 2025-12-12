@@ -15,11 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
-
 
 @Configuration
 @EnableWebSecurity
@@ -33,26 +30,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
+                                           AuthenticationManager authenticationManager,
                                            ApplicationUserDetailsService userDetailsService,
-                                           ApplicationRequestFilter applicationRequestFilter) throws Exception {
+                                           com.tchindaClovis.gestiondestock.config.ApplicationRequestFilter applicationRequestFilter) throws Exception {
 
         http
-                .cors().and() // active le CORS
+                .cors().and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/"+ AUTHENTICATION_ENDPOINT + "/authenticate",
-                                "/"+ APP_ROOT + "/entreprises/create",
+                                "/" + AUTHENTICATION_ENDPOINT + "/authenticate",
+                                "/" + APP_ROOT + "/entreprises/create",
                                 "/" + APP_ROOT + "/utilisateurs/update/password",
                                 "/v2/api-docs",
-                                "/swagger-resources",
                                 "/swagger-resources/**",
-                                "/configuration/ui",
-                                "/configuration/security",
-                                "/swagger-ui.html",
-                                "/webjars/**",
-                                "/v3/api-docs/**",
                                 "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
                                 "/api/files/upload",
                                 "/api/files/delete/**"
                         ).permitAll()
@@ -61,12 +55,13 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authenticationManager(authenticationManager(null))
+                // on utilise l'AuthenticationManager déjà injecté
+                .authenticationManager(authenticationManager)
+                // ajout du filtre JWT personnalisé
                 .addFilterBefore(applicationRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 
     @Bean
     public CorsFilter corsFilter() {
@@ -81,14 +76,114 @@ public class SecurityConfiguration {
         return new CorsFilter(source);
     }
 
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
+
+
+
+
+
+
+
+
+
+//package com.tchindaClovis.gestiondestock.config;
+//
+//import com.tchindaClovis.gestiondestock.services.auth.ApplicationUserDetailsService;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.http.SessionCreationPolicy;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.web.cors.CorsConfiguration;
+//import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+//import org.springframework.web.filter.CorsFilter;
+//import org.springframework.web.servlet.config.annotation.CorsRegistry;
+//import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+//import static com.tchindaClovis.gestiondestock.utils.Constants.APP_ROOT;
+//import static com.tchindaClovis.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
+//
+//
+//@Configuration
+//@EnableWebSecurity
+//public class SecurityConfiguration {
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(
+//            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http,
+//                                           ApplicationUserDetailsService userDetailsService,
+//                                           ApplicationRequestFilter applicationRequestFilter) throws Exception {
+//
+//        http
+//                .cors().and() // active le CORS
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers(
+//                                "/"+ AUTHENTICATION_ENDPOINT + "/authenticate",
+//                                "/"+ APP_ROOT + "/entreprises/create",
+//                                "/" + APP_ROOT + "/utilisateurs/update/password",
+//                                "/v2/api-docs",
+//                                "/swagger-resources",
+//                                "/swagger-resources/**",
+//                                "/configuration/ui",
+//                                "/configuration/security",
+//                                "/swagger-ui.html",
+//                                "/webjars/**",
+//                                "/v3/api-docs/**",
+//                                "/swagger-ui/**",
+//                                "/api/files/upload",
+//                                "/api/files/delete/**"
+//                        ).permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .sessionManagement(session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                )
+//                .authenticationManager(authenticationManager(null))
+//                .addFilterBefore(applicationRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+//
+//
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.addAllowedOrigin("http://localhost:4200");
+//        config.addAllowedHeader("*");
+//        config.addAllowedMethod("*");
+//        config.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(source);
+//    }
+//
+//
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//}
+
+
+
+
 
 
 

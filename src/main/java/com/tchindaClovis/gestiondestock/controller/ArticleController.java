@@ -37,11 +37,13 @@ public class ArticleController implements ArticleApi {
 
     @Override
     public ArticleDto findByCodeArticle(String codeArticle) {
+
         return articleService.findByCodeArticle(codeArticle);
     }
 
     @Override
     public List<ArticleDto> findAll() {
+
         return articleService.findAll();
     }
 

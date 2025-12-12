@@ -5,6 +5,8 @@ import com.tchindaClovis.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tchindaClovis.gestiondestock.dto.UtilisateurDto;
 import com.tchindaClovis.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -44,9 +46,17 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public UtilisateurDto findByEmail(String email) {
-        return utilisateurService.findByEmail(email);
+//    public UtilisateurDto findByEmail(String email) {
+//
+//        return utilisateurService.findByEmail(email);
+//    }
+    public ResponseEntity<UtilisateurDto> findByEmail(@PathVariable("email") String email) {
+
+        UtilisateurDto dto = utilisateurService.findByEmail(email);
+
+        return ResponseEntity.ok(dto);
     }
+
 
     @Override
     public List<UtilisateurDto> findAll() {

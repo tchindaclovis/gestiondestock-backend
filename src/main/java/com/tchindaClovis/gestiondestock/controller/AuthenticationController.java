@@ -8,6 +8,7 @@ import com.tchindaClovis.gestiondestock.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 //@RequestMapping(AUTHENTICATION_ENDPOINT)
 public class AuthenticationController implements AuthenticationApi {
-
     private AuthenticationManager authenticationManager;
     private ApplicationUserDetailsService userDetailsService;
     private JwtUtil jwtUtil;
@@ -35,8 +35,8 @@ public class AuthenticationController implements AuthenticationApi {
 
     @Override
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-//        try {
-//            // Authentifier l'utilisateur pour voir s'il existe dans la BDD
+        try {
+            // Authentifier l'utilisateur pour voir s'il existe dans la BDD
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getLogin(),
@@ -53,6 +53,94 @@ public class AuthenticationController implements AuthenticationApi {
             // Retourner la réponse
             return ResponseEntity.ok(AuthenticationResponse.builder().accessToken(jwtToken).build());
 
+        } catch (BadCredentialsException e) {
+        return ResponseEntity
+                .status(401)
+                .body(AuthenticationResponse
+                        .builder()
+                        .error("Identifiants invalides")
+                        .build()
+                );
+
+        } catch (Exception e) {
+        return ResponseEntity
+                .status(500)
+                .body(AuthenticationResponse
+                        .builder()
+                        .error("Erreur interne du serveur")
+                        .build()
+                );
+        }
+    }
+}
+
+
+
+
+//package com.tchindaClovis.gestiondestock.controller;
+//
+//import com.tchindaClovis.gestiondestock.controller.api.AuthenticationApi;
+//import com.tchindaClovis.gestiondestock.dto.auth.AuthenticationRequest;
+//import com.tchindaClovis.gestiondestock.dto.auth.AuthenticationResponse;
+//import com.tchindaClovis.gestiondestock.services.auth.ApplicationUserDetailsService;
+//import com.tchindaClovis.gestiondestock.utils.JwtUtil;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.BadCredentialsException;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//@RestController
+//public class AuthenticationController implements AuthenticationApi {
+//
+//    private AuthenticationManager authenticationManager;
+//    private ApplicationUserDetailsService userDetailsService;
+//    private JwtUtil jwtUtil;
+//
+//    @Autowired
+//    public AuthenticationController(
+//            AuthenticationManager authenticationManager,
+//            ApplicationUserDetailsService userDetailsService,
+//            JwtUtil jwtUtil
+//    ) {
+//        this.authenticationManager = authenticationManager;
+//        this.userDetailsService = userDetailsService;
+//        this.jwtUtil = jwtUtil;
+//    }
+//
+//    @Override
+//    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+//        try {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            request.getLogin(),
+//                            request.getPassword()
+//                    )
+//            );
+//
+//            final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());
+//            final String jwtToken = jwtUtil.generateToken(userDetails);
+//
+//            return ResponseEntity.ok(AuthenticationResponse.builder().accessToken(jwtToken).build());
+//
+//        } catch (BadCredentialsException ex) {
+//            return ResponseEntity.status(401).body(AuthenticationResponse.builder()
+//                    .error("Identifiants invalides").build());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body(AuthenticationResponse.builder()
+//                    .error("Erreur interne").build());
+//        }
+//    }
+//}
+
+
+
+
+
+
 //        } catch (BadCredentialsException e) {
 //        return ResponseEntity.status(401).body(
 //                AuthenticationResponse.builder()
@@ -66,16 +154,6 @@ public class AuthenticationController implements AuthenticationApi {
 //                        .build()
 //        );
 //        }
-    }
-}
-
-
-
-
-
-
-
-
 
 
 
