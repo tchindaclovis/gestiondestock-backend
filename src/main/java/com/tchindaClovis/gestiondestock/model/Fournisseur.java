@@ -16,6 +16,9 @@ public class Fournisseur extends AbstractEntity{
     @Column(name = "nomfournisseur")
     private String nom;
 
+    @Column(name = "prenomfournisseur")
+    private String prenom;
+
     @Embedded //champ embarqué qui peut être utilisé dan plusieurs autres classes
     private Adresse adresse;
 

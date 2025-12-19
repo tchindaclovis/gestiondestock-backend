@@ -42,7 +42,7 @@ spring:
 
       ## Hibernate DDL Auto (create, create-drop, update, none, validate)
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
       ## Port du serveur

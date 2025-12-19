@@ -47,18 +47,18 @@ public interface FournisseurApi {
     )
     FournisseurDto findById(@PathVariable("idFournisseur") Integer id);
 
-    @GetMapping(value = APP_ROOT + "/fournisseurs/{nom}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(
-            summary = "Rechercher un fournisseur par nom",
-            description = "Cette méthode permet de rechercher un fournisseur par son nom",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Le nom du fournisseur a été trouvé dans la BDD",
-                    content = @Content(schema = @Schema(implementation = FournisseurDto.class))),
-                @ApiResponse(responseCode = "404", description = "Aucun fournisseur trouvé avec le nom fourni")
-            }
-    )
-    FournisseurDto findByNom(@PathVariable("nomFournisseur")  String nom);
+//    @GetMapping(value = APP_ROOT + "/fournisseurs/{nom}",
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Operation(
+//            summary = "Rechercher un fournisseur par nom",
+//            description = "Cette méthode permet de rechercher un fournisseur par son nom",
+//            responses = {
+//                @ApiResponse(responseCode = "200", description = "Le nom du fournisseur a été trouvé dans la BDD",
+//                    content = @Content(schema = @Schema(implementation = FournisseurDto.class))),
+//                @ApiResponse(responseCode = "404", description = "Aucun fournisseur trouvé avec le nom fourni")
+//            }
+//    )
+//    FournisseurDto findByNom(@PathVariable("nomFournisseur")  String nom);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/all",
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -55,6 +55,8 @@ public class ClientDto {
         client.setNom(clientDto.getNom());
         client.setPrenom(clientDto.getPrenom());
         client.setPhoto(clientDto.getPhoto());
+        client.setEmail(clientDto.getEmail());
+        client.setNumTel(clientDto.getNumTel());
         client.setAdresse(AdresseDto.toEntity(clientDto.getAdresse()));
         client.setIdEntreprise(clientDto.getIdEntreprise());
 
