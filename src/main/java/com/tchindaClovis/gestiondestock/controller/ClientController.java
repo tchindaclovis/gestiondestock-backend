@@ -29,17 +29,17 @@ public class ClientController implements ClientApi {
         return clientService.findById(id);
     }
 
-    @Override
-    public ClientDto findByNom(String nom) {
+//    @Override
+//    public ClientDto findByNom(String nom) {
+//
+//        return clientService.findByNom(nom);
+//    }
 
-        return clientService.findByNom(nom);
-    }
-
-    @Override
-    public ClientDto findByPrenom(String prenom) {
-
-        return clientService.findByPrenom(prenom);
-    }
+//    @Override
+//    public ClientDto findByPrenom(String prenom) {
+//
+//        return clientService.findByPrenom(prenom);
+//    }
 
     @Override
     public List<ClientDto> findAll() {

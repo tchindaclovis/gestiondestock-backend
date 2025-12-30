@@ -44,31 +44,31 @@ public interface ClientApi {
     )
     ClientDto findById(@PathVariable("idClient") Integer id);
 
-    @GetMapping(value = APP_ROOT + "/clients/{nom}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(
-            summary = "Rechercher un client par nom",
-            description = "Cette méthode permet de rechercher un client par son nom",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Le nom du client a été trouvé dans la BDD",
-                    content = @Content(schema = @Schema(implementation = ClientDto.class))),
-                @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec le nom fourni")
-            }
-    )
-    ClientDto findByNom(@PathVariable("nom")  String nom);
+//    @GetMapping(value = APP_ROOT + "/clients/{nom}",
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Operation(
+//            summary = "Rechercher un client par nom",
+//            description = "Cette méthode permet de rechercher un client par son nom",
+//            responses = {
+//                @ApiResponse(responseCode = "200", description = "Le nom du client a été trouvé dans la BDD",
+//                    content = @Content(schema = @Schema(implementation = ClientDto.class))),
+//                @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec le nom fourni")
+//            }
+//    )
+//    ClientDto findByNom(@PathVariable("nom")  String nom);
 
-    @GetMapping(value = APP_ROOT + "/clients/{prenom}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(
-            summary = "Rechercher un client par prenom",
-            description = "Cette méthode permet de rechercher un client par son prenom",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Le prenom du client a été trouvé dans la BDD",
-                    content = @Content(schema = @Schema(implementation = ClientDto.class))),
-                @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec le prenom fourni")
-            }
-    )
-    ClientDto findByPrenom(@PathVariable("prenom")  String prenom);
+//    @GetMapping(value = APP_ROOT + "/clients/{prenom}",
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Operation(
+//            summary = "Rechercher un client par prenom",
+//            description = "Cette méthode permet de rechercher un client par son prenom",
+//            responses = {
+//                @ApiResponse(responseCode = "200", description = "Le prenom du client a été trouvé dans la BDD",
+//                    content = @Content(schema = @Schema(implementation = ClientDto.class))),
+//                @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec le prenom fourni")
+//            }
+//    )
+//    ClientDto findByPrenom(@PathVariable("prenom")  String prenom);
 
     @GetMapping(value = APP_ROOT + "/clients/all",
             produces = MediaType.APPLICATION_JSON_VALUE)
