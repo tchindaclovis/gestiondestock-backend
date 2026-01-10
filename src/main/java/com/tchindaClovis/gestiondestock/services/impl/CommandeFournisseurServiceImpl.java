@@ -49,6 +49,14 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
     @Override
     public CommandeFournisseurDto save(CommandeFournisseurDto dto) {
 
+        log.info("Saving command with {} lines",
+                dto.getLigneCommandeFournisseurs() != null ? dto.getLigneCommandeFournisseurs().size() : 0);
+
+        if (dto.getLigneCommandeFournisseurs() != null) {
+            log.info("Ligne details: {}", dto.getLigneCommandeFournisseurs());
+        }
+
+
         List<String> errors = CommandeFournisseurValidator.validate(dto);
 
         if (!errors.isEmpty()) {
@@ -91,10 +99,10 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         if (dto.getLigneCommandeFournisseurs() != null) {
             dto.getLigneCommandeFournisseurs().forEach(ligCmdFrs -> {
-                LigneCommandeFournisseur ligneCommandeFournisseur = LigneCommandeFournisseurDto.toEntity(ligCmdFrs);
-                ligneCommandeFournisseur.setCommandeFournisseur(savedCmdFrs);
-                ligneCommandeFournisseur.setIdEntreprise(savedCmdFrs.getIdEntreprise());
-                LigneCommandeFournisseur saveLigne = ligneCommandeFournisseurRepository.save(ligneCommandeFournisseur);
+                LigneCommandeFournisseur ligneCommandeFournisseurs = LigneCommandeFournisseurDto.toEntity(ligCmdFrs);
+                ligneCommandeFournisseurs.setCommandeFournisseur(savedCmdFrs);
+                ligneCommandeFournisseurs.setIdEntreprise(savedCmdFrs.getIdEntreprise());
+                LigneCommandeFournisseur saveLigne = ligneCommandeFournisseurRepository.save(ligneCommandeFournisseurs);
 
                 effectuerEntree(saveLigne);
             });
@@ -135,9 +143,9 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         CommandeFournisseurDto commandeFournisseur = checkEtatCommande(idCommande);
         Optional<LigneCommandeFournisseur> ligneCommandeFournisseurOptional = findLigneCommandeFournisseur(idLigneCommande);
 
-        LigneCommandeFournisseur ligneCommandeFounisseur = ligneCommandeFournisseurOptional.get();
-        ligneCommandeFounisseur.setQuantite(quantite);
-        ligneCommandeFournisseurRepository.save(ligneCommandeFounisseur);
+        LigneCommandeFournisseur ligneCommandeFounisseurs = ligneCommandeFournisseurOptional.get();
+        ligneCommandeFounisseurs.setQuantite(quantite);
+        ligneCommandeFournisseurRepository.save(ligneCommandeFounisseurs);
 
         return commandeFournisseur;
     }
@@ -171,7 +179,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         CommandeFournisseurDto commandeFournisseur = checkEtatCommande(idCommande);
 
-        Optional<LigneCommandeFournisseur> ligneCommandeFournisseur = findLigneCommandeFournisseur(idLigneCommande);
+        Optional<LigneCommandeFournisseur> ligneCommandeFournisseurs = findLigneCommandeFournisseur(idLigneCommande);
 
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
         if (articleOptional.isEmpty()) {
@@ -184,7 +192,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             throw new InvalidEntityException("Article invalid", ErrorCodes.ARTICLE_NOT_VALID, errors);
         }
 
-        LigneCommandeFournisseur ligneCommandeFournisseurToSaved = ligneCommandeFournisseur.get();
+        LigneCommandeFournisseur ligneCommandeFournisseurToSaved = ligneCommandeFournisseurs.get();
         ligneCommandeFournisseurToSaved.setArticle(articleOptional.get());
         ligneCommandeFournisseurRepository.save(ligneCommandeFournisseurToSaved);
 

@@ -24,7 +24,6 @@ public class CommandeFournisseurDto {
 
     private Integer idEntreprise;
 
-    @JsonIgnore  //pour que ceci ne soit pas mappé car on n'a pas besoin de l'objet LCF dans l'objet CF
     private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
 
@@ -58,6 +57,7 @@ public class CommandeFournisseurDto {
         return commandeFournisseur;
     }
     public boolean isCommandeLivree() {
+
         return EEtatCommande.LIVREE.equals(this.etatCommande);
     }
 }

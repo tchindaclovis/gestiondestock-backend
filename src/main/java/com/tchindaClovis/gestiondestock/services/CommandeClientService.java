@@ -1,6 +1,5 @@
 package com.tchindaClovis.gestiondestock.services;
 
-import com.tchindaClovis.gestiondestock.dto.ArticleDto;
 import com.tchindaClovis.gestiondestock.dto.CommandeClientDto;
 import com.tchindaClovis.gestiondestock.dto.LigneCommandeClientDto;
 import com.tchindaClovis.gestiondestock.model.EEtatCommande;

@@ -1,4 +1,5 @@
 package com.tchindaClovis.gestiondestock.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tchindaClovis.gestiondestock.model.Article;
 import com.tchindaClovis.gestiondestock.model.CommandeFournisseur;
 import com.tchindaClovis.gestiondestock.model.LigneCommandeFournisseur;
@@ -19,20 +20,21 @@ public class LigneCommandeFournisseurDto {
 
     private ArticleDto article;
 
+    @JsonIgnore  //pour que ceci ne soit pas mappé car on n'a pas besoin de l'objet CF dans l'objet LCF
     private CommandeFournisseurDto commandeFournisseur;
 
-    public static LigneCommandeFournisseurDto fromEntity (LigneCommandeFournisseur ligneCommandeFournisseur){  //permet de faire un mapping de l'entité vers le DTO
-        if(ligneCommandeFournisseur == null){
+    public static LigneCommandeFournisseurDto fromEntity (LigneCommandeFournisseur ligneCommandeFournisseurs){  //permet de faire un mapping de l'entité vers le DTO
+        if(ligneCommandeFournisseurs == null){
             return null;
         }
 
         return LigneCommandeFournisseurDto.builder()
-                .id(ligneCommandeFournisseur.getId())
-                .quantite(ligneCommandeFournisseur.getQuantite())
-                .prixUnitaire(ligneCommandeFournisseur.getPrixUnitaire())
-                .idEntreprise(ligneCommandeFournisseur.getIdEntreprise())
-                .article(ArticleDto.fromEntity(ligneCommandeFournisseur.getArticle()))
-//                .commandeFournisseur(CommandeFournisseurDto.fromEntity(ligneCommandeFournisseur.getCommandeFournisseur()))
+                .id(ligneCommandeFournisseurs.getId())
+                .quantite(ligneCommandeFournisseurs.getQuantite())
+                .prixUnitaire(ligneCommandeFournisseurs.getPrixUnitaire())
+                .idEntreprise(ligneCommandeFournisseurs.getIdEntreprise())
+                .article(ArticleDto.fromEntity(ligneCommandeFournisseurs.getArticle()))
+//                .commandeFournisseur(CommandeFournisseurDto.fromEntity(ligneCommandeFournisseurs.getCommandeFournisseurs()))
                 .build();
     }
 
@@ -40,15 +42,15 @@ public class LigneCommandeFournisseurDto {
         if(ligneCommandeFournisseurDto == null){
             return null;
         }
-        LigneCommandeFournisseur ligneCommandeFournisseur = new LigneCommandeFournisseur();
-        ligneCommandeFournisseur.setId(ligneCommandeFournisseurDto.getId());
-        ligneCommandeFournisseur.setQuantite(ligneCommandeFournisseurDto.getQuantite());
-        ligneCommandeFournisseur.setPrixUnitaire(ligneCommandeFournisseurDto.getPrixUnitaire());
-        ligneCommandeFournisseur.setIdEntreprise(ligneCommandeFournisseurDto.getIdEntreprise());
-        ligneCommandeFournisseur.setArticle(ArticleDto.toEntity(ligneCommandeFournisseurDto.getArticle()));
-//        ligneCommandeFournisseur.setCommandeFournisseur(CommandeFournisseurDto.toEntity(ligneCommandeFournisseurDto.getCommandeFournisseur()));
+        LigneCommandeFournisseur ligneCommandeFournisseurs = new LigneCommandeFournisseur();
+        ligneCommandeFournisseurs.setId(ligneCommandeFournisseurDto.getId());
+        ligneCommandeFournisseurs.setQuantite(ligneCommandeFournisseurDto.getQuantite());
+        ligneCommandeFournisseurs.setPrixUnitaire(ligneCommandeFournisseurDto.getPrixUnitaire());
+        ligneCommandeFournisseurs.setIdEntreprise(ligneCommandeFournisseurDto.getIdEntreprise());
+        ligneCommandeFournisseurs.setArticle(ArticleDto.toEntity(ligneCommandeFournisseurDto.getArticle()));
+//        ligneCommandeFournisseurs.setCommandeFournisseur(CommandeFournisseurDto.toEntity(ligneCommandeFournisseurDto.getCommandeFournisseur()));
 
-        return ligneCommandeFournisseur;
+        return ligneCommandeFournisseurs;
     }
 
 }

@@ -1,8 +1,6 @@
 package com.tchindaClovis.gestiondestock.validator;
 
-import com.tchindaClovis.gestiondestock.dto.LigneCommandeClientDto;
 import com.tchindaClovis.gestiondestock.dto.LigneVenteDto;
-
 import java.util.ArrayList;
 import java.util.List;
 

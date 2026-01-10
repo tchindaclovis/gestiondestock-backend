@@ -20,21 +20,22 @@ public class LigneCommandeClientDto {
     private Integer idEntreprise;
 
     private ArticleDto article;
-    @JsonIgnore
+
+    @JsonIgnore  //pour que ceci ne soit pas mappé car on n'a pas besoin de l'objet CC dans l'objet LCC
     private CommandeClientDto commandeClient;
 
-    public static LigneCommandeClientDto fromEntity (LigneCommandeClient ligneCommandeClient){  //permet de faire un mapping de l'entité vers le DTO
-        if(ligneCommandeClient == null){
+    public static LigneCommandeClientDto fromEntity (LigneCommandeClient ligneCommandeClients){  //permet de faire un mapping de l'entité vers le DTO
+        if(ligneCommandeClients == null){
             return null;
         }
 
         return LigneCommandeClientDto.builder()
-                .id(ligneCommandeClient.getId())
-                .quantite(ligneCommandeClient.getQuantite())
-                .prixUnitaire(ligneCommandeClient.getPrixUnitaire())
-                .idEntreprise(ligneCommandeClient.getIdEntreprise())
-                .article(ArticleDto.fromEntity(ligneCommandeClient.getArticle()))
-//                .commandeClient(CommandeClientDto.fromEntity(ligneCommandeClient.getCommandeClient()))
+                .id(ligneCommandeClients.getId())
+                .quantite(ligneCommandeClients.getQuantite())
+                .prixUnitaire(ligneCommandeClients.getPrixUnitaire())
+                .idEntreprise(ligneCommandeClients.getIdEntreprise())
+                .article(ArticleDto.fromEntity(ligneCommandeClients.getArticle()))
+//                .commandeClient(CommandeClientDto.fromEntity(ligneCommandeClients.getCommandeClient()))
                 .build();
     }
 
@@ -42,13 +43,13 @@ public class LigneCommandeClientDto {
         if(ligneCommandeClientDto == null){
             return null;
         }
-        LigneCommandeClient ligneCommandeClient = new LigneCommandeClient();
-        ligneCommandeClient.setId(ligneCommandeClientDto.getId());
-        ligneCommandeClient.setQuantite(ligneCommandeClientDto.getQuantite());
-        ligneCommandeClient.setPrixUnitaire(ligneCommandeClientDto.getPrixUnitaire());
-        ligneCommandeClient.setIdEntreprise(ligneCommandeClientDto.getIdEntreprise());
-        ligneCommandeClient.setArticle(ArticleDto.toEntity(ligneCommandeClientDto.getArticle()));
-//        ligneCommandeClient.setCommandeClient(CommandeClientDto.toEntity(ligneCommandeClientDto.getCommandeClient()));
-        return ligneCommandeClient;
+        LigneCommandeClient ligneCommandeClients = new LigneCommandeClient();
+        ligneCommandeClients.setId(ligneCommandeClientDto.getId());
+        ligneCommandeClients.setQuantite(ligneCommandeClientDto.getQuantite());
+        ligneCommandeClients.setPrixUnitaire(ligneCommandeClientDto.getPrixUnitaire());
+        ligneCommandeClients.setIdEntreprise(ligneCommandeClientDto.getIdEntreprise());
+        ligneCommandeClients.setArticle(ArticleDto.toEntity(ligneCommandeClientDto.getArticle()));
+//        ligneCommandeClients.setCommandeClient(CommandeClientDto.toEntity(ligneCommandeClientDto.getCommandeClient()));
+        return ligneCommandeClients;
     }
 }

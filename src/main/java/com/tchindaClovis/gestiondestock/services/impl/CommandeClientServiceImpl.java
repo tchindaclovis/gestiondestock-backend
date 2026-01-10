@@ -53,6 +53,14 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public CommandeClientDto save(CommandeClientDto dto) {
 
+        log.info("Saving command with {} lines",
+                dto.getLigneCommandeClients() != null ? dto.getLigneCommandeClients().size() : 0);
+
+        if (dto.getLigneCommandeClients() != null) {
+            log.info("Ligne details: {}", dto.getLigneCommandeClients());
+        }
+
+
         List<String> errors = CommandeClientValidator.validate(dto);
 
         if (!errors.isEmpty()) {
@@ -95,10 +103,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         if (dto.getLigneCommandeClients() != null) {
             dto.getLigneCommandeClients().forEach(ligCmdClt -> {
-                LigneCommandeClient ligneCommandeClient = LigneCommandeClientDto.toEntity(ligCmdClt);
-                ligneCommandeClient.setCommandeClient(savedCmdClt);
-                ligneCommandeClient.setIdEntreprise(dto.getIdEntreprise());
-                LigneCommandeClient savedLigneCmd = ligneCommandeClientRepository.save(ligneCommandeClient);
+                LigneCommandeClient ligneCommandeClients = LigneCommandeClientDto.toEntity(ligCmdClt);
+
+//                log.info("LIGNES A SAUVER : {}", dto.getLigneCommandeClients());
+
+                ligneCommandeClients.setCommandeClient(savedCmdClt);
+                ligneCommandeClients.setIdEntreprise(dto.getIdEntreprise());
+                LigneCommandeClient savedLigneCmd = ligneCommandeClientRepository.save(ligneCommandeClients);
 
                 effectuerSortie(savedLigneCmd);
             });
@@ -194,9 +205,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         CommandeClientDto commandeClient = checkEtatCommande(idCommande);
         Optional<LigneCommandeClient> ligneCommandeClientOptional = findLigneCommandeClient(idLigneCommande);
 
-        LigneCommandeClient ligneCommandeClient = ligneCommandeClientOptional.get();
-        ligneCommandeClient.setQuantite(quantite);
-        ligneCommandeClientRepository.save(ligneCommandeClient);
+        LigneCommandeClient ligneCommandeClients = ligneCommandeClientOptional.get();
+        ligneCommandeClients.setQuantite(quantite);
+        ligneCommandeClientRepository.save(ligneCommandeClients);
 
         return commandeClient;
     }
@@ -230,7 +241,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         CommandeClientDto commandeClient = checkEtatCommande(idCommande);
 
-        Optional<LigneCommandeClient> ligneCommandeClient = findLigneCommandeClient(idLigneCommande);
+        Optional<LigneCommandeClient> ligneCommandeClients = findLigneCommandeClient(idLigneCommande);
 
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
         if (articleOptional.isEmpty()) {
@@ -243,7 +254,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             throw new InvalidEntityException("Article invalid", ErrorCodes.ARTICLE_NOT_VALID, errors);
         }
 
-        LigneCommandeClient ligneCommandeClientToSaved = ligneCommandeClient.get();
+        LigneCommandeClient ligneCommandeClientToSaved = ligneCommandeClients.get();
         ligneCommandeClientToSaved.setArticle(articleOptional.get());
         ligneCommandeClientRepository.save(ligneCommandeClientToSaved);
 
@@ -296,6 +307,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
     }
 
+
     private void checkIdArticle(Integer idArticle, String msg) {
         if (idArticle == null) {
             log.error("L'ID de " + msg + " is NULL");
@@ -340,13 +352,15 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                     .map(LigneCommandeClientDto::toEntity)
                     .collect(Collectors.toList());
 
-            lignes.forEach(l -> l.setCommandeClient(commandeClient));
-            commandeClient.setLignesCommandeClients(lignes);
+            lignes.forEach(l -> {
+                l.setCommandeClient(commandeClient);
+                l.setIdEntreprise(commandeClient.getIdEntreprise());
+            });
+//            lignes.forEach(l -> l.setCommandeClient(commandeClient));
+            commandeClient.setLigneCommandeClients(lignes);
         }
-
         return commandeClient;
     }
-
 }
 
 
